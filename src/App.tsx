@@ -1,7 +1,8 @@
+import Navbar from "./Navbar/Navbar";
 import "./index.css";
 
 function App() {
-    return <div className="text-9xl font-bold underline text-center">TODO</div>;
+    return <Navbar />;
 }
 
 export default App;
