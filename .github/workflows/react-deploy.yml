@@ -22,4 +22,11 @@ jobs:
               with:
                   aws-region: us-east-1
                   role-to-assume: arn:aws:iam::058264200211:role/github_oidc
-            - run: aws sts get-caller-identity
+            - name: Install NPM packages
+              run: npm install
+            - name: Build Static Files
+              run: npm run build
+            - name: Remove previous web files
+              run: aws s3 rm s3://event-n-greet-react-web/ --recursive
+            - name: Upload new web files
+              run: cd dist && aws s3 sync . s3://event-n-greet-react-web/
