@@ -1,0 +1,22 @@
+name: React Web Deployment
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - "*"
+
+jobs:
+    deploy-to-s3:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v2
+              with:
+                  aws-region: us-east-1
+                  role-to-assume: arn:aws:iam::058264200211:role/github_oidc
+            - run: aws sts get-caller-identity
