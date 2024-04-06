@@ -1,12 +1,13 @@
 import { faMoneyBill } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import getMonth from "../../../HelperFunctions/GetMonth";
+import getMonth from "../../../helperFunctions/GetMonth";
 
-interface events {
+interface event {
     id: number;
     ownerId: number;
     title: string;
     description: string;
+    address: string;
     imgSrc: string;
     startsAt: string;
     endsAt: string;
@@ -28,14 +29,14 @@ interface events {
     type: "FREE" | "PAID";
 }
 
-export default function EventCard(event: events) {
+export default function EventCard(props: event) {
     return (
         <div
-            key={event.id}
+            key={props.id}
             className="flex flex-col px-6 py-4 items-center justify-center border shadow-lg mx-4 rounded-md"
         >
             <div className="relative py-2">
-                {event.type == "PAID" && (
+                {props.type == "PAID" && (
                     <FontAwesomeIcon
                         icon={faMoneyBill}
                         style={{
@@ -46,19 +47,19 @@ export default function EventCard(event: events) {
                     />
                 )}
                 <img
-                    src={event.imgSrc}
+                    src={props.imgSrc}
                     alt="Here is an event cover."
-                    className="rounded-md object-cover border border-black"
+                    className="rounded-md object-cover border border-black aspect-square"
                 />
                 <p className="font-spectral text-sm absolute bottom-2.5 right-1.5">
                     {`${getMonth(
-                        event.startsAt.substring(3, 5)
-                    )} ${event.startsAt.substring(0, 2)} - ${getMonth(
-                        event.endsAt.substring(3, 5)
-                    )} ${event.endsAt.substring(0, 2)}`}
+                        props.startsAt.substring(3, 5)
+                    )} ${props.startsAt.substring(0, 2)} - ${getMonth(
+                        props.endsAt.substring(3, 5)
+                    )} ${props.endsAt.substring(0, 2)}`}
                 </p>
             </div>
-            <p className="font-spectral font-semibold text-xl">{event.title}</p>
+            <p className="font-spectral font-semibold text-xl">{props.title}</p>
         </div>
     );
 }
