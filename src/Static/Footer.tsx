@@ -2,7 +2,7 @@ import Logo from "../Utils/Logo";
 
 export default function Footer() {
     return (
-        <footer className="flex flex-col items-center justify-center gap-4 font-spectral text-white text-md bg-secondary-black-lighter px-4 py-6">
+        <footer className="flex flex-col items-center justify-center gap-4 font-spectral text-white text-md bg-secondary-black-lighter px-4 py-6 mt-10">
             <div className="flex justify-center gap-10">
                 <div>
                     <p className="text-accent-blue">HOME</p>

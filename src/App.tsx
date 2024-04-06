@@ -2,11 +2,13 @@ import Footer from "./Static/Footer";
 import Navbar from "./Static/Navbar";
 import "./index.css";
 
+import { Outlet } from "react-router-dom";
+
 function App() {
     return (
         <>
             <Navbar />
-            <div className="px-10 py-10"></div>
+            <Outlet />
             <Footer />
         </>
     );
