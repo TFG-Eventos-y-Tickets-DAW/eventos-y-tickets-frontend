@@ -11,9 +11,6 @@ function App() {
     const [currentUser, setCurrentUser] = useState<IUserInfo>();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
 
-    console.log(isLoggedIn);
-    console.log(currentUser);
-
     const userInfo = {
         isLoggedIn: isLoggedIn,
         currentUser: currentUser,

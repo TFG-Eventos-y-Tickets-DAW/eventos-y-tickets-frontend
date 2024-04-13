@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../Utils/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import login from "../../../HelperFunctions/apis";
@@ -18,6 +18,7 @@ export default function Login() {
         formState: { errors },
     } = useForm<formInput>();
 
+    const navigate = useNavigate();
     const user = useContext(UserContext);
 
     const onSubmit: SubmitHandler<formInput> = async (data) => {
@@ -39,6 +40,8 @@ export default function Login() {
                 lastName: response.lastName,
                 email: response.email,
             });
+
+        navigate("/user/menu");
     };
 
     return (
