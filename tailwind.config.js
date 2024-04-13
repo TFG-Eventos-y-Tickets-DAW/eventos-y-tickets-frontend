@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
@@ -17,7 +18,7 @@ export default {
                 spectral: ["Spectral", "serif"],
             },
             backgroundImage: {
-                "hero-image": "url('src/assets/Hero.jpg')",
+                "hero-image": "var(--hero-url)",
             },
         },
     },
