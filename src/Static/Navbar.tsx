@@ -16,10 +16,12 @@ export default function Navbar() {
                             text="Sign In"
                         />
                     </Link>
-                    <Button
-                        className="font-spectral bg-accent-blue text-black rounded-md py-1 px-2"
-                        text="Get Started"
-                    />
+                    <Link to={"/signin"}>
+                        <Button
+                            className="font-spectral bg-accent-blue text-black rounded-md py-1 px-2"
+                            text="Get Started"
+                        />
+                    </Link>
                 </div>
             )}
             {/* Navbar when user is logged in */}
