@@ -17,9 +17,6 @@ export default {
                 karla: ["Karla", "sans-serif"],
                 spectral: ["Spectral", "serif"],
             },
-            backgroundImage: {
-                "hero-image": "var(--hero-url)",
-            },
         },
     },
     plugins: [],
