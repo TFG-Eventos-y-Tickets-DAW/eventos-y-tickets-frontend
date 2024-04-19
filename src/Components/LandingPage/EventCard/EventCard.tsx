@@ -1,6 +1,6 @@
 import { faMoneyBill } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import getMonth from "../../../HelperFunctions/GetMonth";
+import getMonth from "../../../HelperFunctions/getMonth";
 
 interface event {
     id: number;

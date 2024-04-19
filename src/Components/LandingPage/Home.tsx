@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import pageEvents from "../../types/pageEvents";
 import pagination from "../../types/pagination";
+import { fetchPublicEvents } from "../../HelperFunctions/apis";
 
 function findEventByNumPage(numPage: number, events: pageEvents[]) {
     return (
@@ -17,40 +18,31 @@ function findEventByNumPage(numPage: number, events: pageEvents[]) {
 export default function Home() {
     const [shownEvents, setShownEvents] = useState<pageEvents[]>();
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [maxEventsPage, setMaxEventsPage] = useState<number>();
     const [paginationData, setPaginationData] = useState<pagination>();
 
     useEffect(() => {
-        async function fetchPublicEvents() {
-            const response = await fetch(
-                "https://1he0dulvh9.execute-api.us-east-1.amazonaws.com/api/v1/events",
-                {
-                    method: "POST",
-                    body: JSON.stringify({
-                        filters: {
-                            status: "PUBLISHED",
-                        },
-                        itemsPerPage: 2,
-                    }),
-                }
-            );
+        async function fetchData() {
+            const publicEventsData = await fetchPublicEvents(2);
 
-            response.json().then((data) => {
-                setShownEvents([
-                    {
-                        pageNum: data.pageNum,
-                        events: data.events,
-                    },
-                ]);
-                setPaginationData({
-                    paginationTokensPerPage: data.paginationTokensPerPage,
-                    nextPaginationToken: data.nextPaginationToken,
-                });
+            setShownEvents([
+                {
+                    pageNum: publicEventsData.pageNum,
+                    events: publicEventsData.events,
+                },
+            ]);
+            setPaginationData({
+                paginationTokensPerPage:
+                    publicEventsData.paginationTokensPerPage,
+                nextPaginationToken: publicEventsData.nextPaginationToken,
             });
 
-            return true;
+            setMaxEventsPage(
+                publicEventsData.paginationTokensPerPage.length + 1
+            );
         }
 
-        fetchPublicEvents();
+        fetchData();
     }, []);
 
     async function fetchNextPage(nextPageToken: string) {
@@ -62,38 +54,29 @@ export default function Home() {
             return;
         }
 
-        if (!paginationData?.nextPaginationToken) {
+        if (
+            !paginationData?.nextPaginationToken ||
+            currentPage === maxEventsPage
+        ) {
             return;
         }
 
-        const response = await fetch(
-            "https://1he0dulvh9.execute-api.us-east-1.amazonaws.com/api/v1/events",
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    filters: {
-                        status: "PUBLISHED",
-                    },
-                    paginationToken: nextPageToken,
-                }),
-            }
-        );
+        const nextEventData = await fetchPublicEvents(0, nextPageToken);
 
-        response.json().then((data) => {
-            setShownEvents((shownEvents) => [
-                ...(shownEvents as pageEvents[]),
-                {
-                    pageNum: data.pageNum,
-                    events: data.events,
-                },
-            ]);
-            setPaginationData({
-                paginationTokensPerPage:
-                    paginationData?.paginationTokensPerPage,
-                nextPaginationToken: data.nextPaginationToken,
-            });
-            setCurrentPage((state) => state + 1);
+        setShownEvents((shownEvents) => [
+            ...(shownEvents as pageEvents[]),
+            {
+                pageNum: nextEventData.pageNum,
+                events: nextEventData.events,
+            },
+        ]);
+
+        setPaginationData({
+            paginationTokensPerPage: paginationData?.paginationTokensPerPage,
+            nextPaginationToken: nextEventData.nextPaginationToken,
         });
+
+        setCurrentPage((state) => state + 1);
     }
 
     async function fetchPage(numPage: number, pageToken: string) {
@@ -114,34 +97,22 @@ export default function Home() {
             return;
         }
 
-        const response = await fetch(
-            "https://1he0dulvh9.execute-api.us-east-1.amazonaws.com/api/v1/events",
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    filters: {
-                        status: "PUBLISHED",
-                    },
-                    paginationToken: pageToken,
-                }),
-            }
-        );
+        const eventsPageData = await fetchPublicEvents(0, pageToken);
 
-        response.json().then((data) => {
-            setShownEvents((shownEvents) => [
-                ...(shownEvents as pageEvents[]),
-                {
-                    pageNum: data.pageNum,
-                    events: data.events,
-                },
-            ]);
-            setPaginationData({
-                paginationTokensPerPage:
-                    paginationData?.paginationTokensPerPage,
-                nextPaginationToken: data.nextPaginationToken,
-            });
-            setCurrentPage(numPage);
+        setShownEvents((shownEvents) => [
+            ...(shownEvents as pageEvents[]),
+            {
+                pageNum: eventsPageData.pageNum,
+                events: eventsPageData.events,
+            },
+        ]);
+
+        setPaginationData({
+            paginationTokensPerPage: paginationData?.paginationTokensPerPage,
+            nextPaginationToken: eventsPageData.nextPaginationToken,
         });
+
+        setCurrentPage(numPage);
     }
 
     async function fetchPreviousPage() {
