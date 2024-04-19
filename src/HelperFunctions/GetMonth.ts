@@ -1,4 +1,4 @@
-export default function getMonth(mm: string) {
+export function getMonth(mm: string) {
     switch (mm) {
         case "01":
             return "Jan.";
