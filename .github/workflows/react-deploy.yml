@@ -21,6 +21,8 @@ jobs:
                   role-to-assume: arn:aws:iam::058264200211:role/github_oidc
             - name: Install NPM packages
               run: npm install
+            - name: Check Node Version
+              run: node --version
             - name: Build Static Files
               run: npm run build
             - name: Remove previous web files
