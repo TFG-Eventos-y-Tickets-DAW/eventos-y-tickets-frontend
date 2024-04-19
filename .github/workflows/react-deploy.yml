@@ -27,3 +27,5 @@ jobs:
               run: aws s3 rm s3://event-n-greet-react-web/ --recursive
             - name: Upload new web files
               run: cd dist && aws s3 sync . s3://event-n-greet-react-web/
+            - name: Invalidate Web CloudFront cache
+              run: aws cloudfront create-invalidation --distribution-id E1DEIFIEABRIU6 --paths "/*"
