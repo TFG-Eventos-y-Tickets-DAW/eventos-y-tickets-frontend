@@ -92,7 +92,7 @@ export default function EventDetails() {
                         value={amountOfTicketsToBuy}
                     >
                         {Array.from({ length: ticketsAvailable as number }).map(
-                            (e, i) => (
+                            (_e, i) => (
                                 <option key={i} value={i + 1}>
                                     {i + 1}
                                 </option>
