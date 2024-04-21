@@ -1,4 +1,5 @@
 import { LoginResponse, ErrorResponse, ISignInResponse } from "../types/apis";
+import { eventDetails } from "../types/event";
 
 export const serverUrl: string = "https://api.eventngreet.com/";
 
@@ -29,6 +30,13 @@ export async function fetchPublicEvents(
     });
 
     return events;
+}
+
+export async function getEventById(id: string | undefined) {
+    const event = await fetch(`${serverUrl}/api/v1/event/public/${id}`);
+    const eventJson: eventDetails = await event.json();
+
+    return eventJson;
 }
 
 export async function login(credentials: { email: string; password: string }) {

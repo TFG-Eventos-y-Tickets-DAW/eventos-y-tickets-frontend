@@ -6,6 +6,7 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import pageEvents from "../../types/pageEvents";
 import pagination from "../../types/pagination";
 import { fetchPublicEvents } from "../../HelperFunctions/apis";
+import { Link } from "react-router-dom";
 
 function findEventByNumPage(numPage: number, events: pageEvents[]) {
     return (
@@ -23,7 +24,7 @@ export default function Home() {
 
     useEffect(() => {
         async function fetchData() {
-            const publicEventsData = await fetchPublicEvents(2);
+            const publicEventsData = await fetchPublicEvents(5);
 
             setShownEvents([
                 {
@@ -176,7 +177,11 @@ export default function Home() {
             <div className="flex flex-col gap-10 py-6">
                 {shownEvents &&
                     findEventByNumPage(currentPage, shownEvents).events.map(
-                        (event) => <EventCard {...event} key={event.id} />
+                        (event) => (
+                            <Link to={`/eventdetails/${event.id}`}>
+                                <EventCard {...event} key={event.id} />
+                            </Link>
+                        )
                     )}
             </div>
 
