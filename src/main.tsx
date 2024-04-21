@@ -7,6 +7,7 @@ import Home from "./Components/LandingPage/Home.tsx";
 import Login from "./Components/Auth/Login/Login.tsx";
 import UserMenu from "./Components/UserOptions/UserMenu.tsx";
 import SignIn from "./Components/Auth/SignUp/SignUp.tsx";
+import EventDetails from "./Components/EventDetails/EventDetails.tsx";
 
 const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Home />,
+            },
+            {
+                path: "/eventdetails/:eventId",
+                element: <EventDetails />,
             },
             {
                 path: "/login",

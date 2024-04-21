@@ -6,7 +6,9 @@ import avatar from "../assets/avatar_placeholder.png";
 export default function Navbar() {
     return (
         <nav className="bg-gradient-to-b from-secondary-black-lighter from-85% to-[#232424] flex justify-between items-center py-6 px-4">
-            <Logo />
+            <Link to={"/"}>
+                <Logo />
+            </Link>
             {/* Navbar when user is not logged in */}
             {!localStorage.getItem("jwt") && (
                 <div className="flex gap-2 justify-center items-center">
@@ -33,7 +35,13 @@ export default function Navbar() {
                             text="My Events"
                         />
                     </Link>
-                    <img src={avatar} alt="avatar-image" className="max-h-14" />
+                    <Link to={"user/menu"}>
+                        <img
+                            src={avatar}
+                            alt="avatar-image"
+                            className="max-h-14"
+                        />
+                    </Link>
                 </div>
             )}
         </nav>
