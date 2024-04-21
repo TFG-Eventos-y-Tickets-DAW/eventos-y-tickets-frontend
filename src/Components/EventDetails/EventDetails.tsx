@@ -32,16 +32,18 @@ export default function EventDetails() {
 
     return (
         <div className="font-spectral mt-4 flex flex-col items-center justify-center gap-4">
-            <p className="font-karla text-sm border-t-2 border-b-2 border-red-links text-center w-full">
-                Reminder: you need to{" "}
-                <Link
-                    to={"/signin"}
-                    className="underline text-red-links hover:no-underline hover:font-bold"
-                >
-                    sign in
-                </Link>{" "}
-                to view bought tickets.
-            </p>
+            {!localStorage.getItem("jwt") && (
+                <p className="font-karla text-sm border-t-2 border-b-2 border-red-links text-center w-full">
+                    Reminder: you need to{" "}
+                    <Link
+                        to={"/signin"}
+                        className="underline text-red-links hover:no-underline hover:font-bold"
+                    >
+                        sign in
+                    </Link>{" "}
+                    to view bought tickets.
+                </p>
+            )}
             <div className="flex flex-col justify-center items-center shadow-lg m-4 p-4 gap-4 rounded-lg">
                 <h1 className="font-karla font-bold text-4xl text-center">
                     {event?.title}
