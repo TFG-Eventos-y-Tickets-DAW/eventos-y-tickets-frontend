@@ -3,9 +3,11 @@ import Footer from "./Static/Footer";
 import Navbar from "./Static/Navbar";
 import { UserContext } from "./context/Context";
 import "./index.css";
-
 import { Outlet } from "react-router-dom";
 import { IUserInfo } from "./types/context";
+import ReactModal from "react-modal";
+
+ReactModal.setAppElement("#root");
 
 function App() {
     const [currentUser, setCurrentUser] = useState<IUserInfo>();

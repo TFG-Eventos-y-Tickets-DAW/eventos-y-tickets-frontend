@@ -1,5 +1,6 @@
 import { LoginResponse, ErrorResponse, ISignInResponse } from "../types/apis";
 import { eventDetails } from "../types/event";
+import { ICreateOrderData } from "../types/orders";
 
 export const serverUrl: string = "https://api.eventngreet.com/";
 
@@ -73,4 +74,13 @@ export async function signUp(newUserData: {
     const responseJson: ISignInResponse & ErrorResponse = await response.json();
 
     return responseJson;
+}
+
+export async function createOrderSession(createOrderData: ICreateOrderData) {
+    const orderSessionId = await fetch(`${serverUrl}/api/v1/order/create`, {
+        method: "POST",
+        body: JSON.stringify(createOrderData),
+    }).then((res) => res.json());
+
+    return orderSessionId.orderId;
 }

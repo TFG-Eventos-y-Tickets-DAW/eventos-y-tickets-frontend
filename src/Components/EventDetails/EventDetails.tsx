@@ -6,12 +6,20 @@ import getMonth from "../../HelperFunctions/GetMonth";
 import Button from "../../Utils/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import ReactModal from "react-modal";
+import ChoosePaymentMethod from "../PaymentModals/ChoosePaymentMethod";
+import { ICreateOrderData } from "../../types/orders";
 
 export default function EventDetails() {
     const [event, setEvent] = useState<eventDetails>();
     const [amountOfTicketsToBuy, setAmountOfTicketsToBuy] = useState<
         number | string
     >(1);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] =
+        useState<string>("paypal");
+    const [createOrderData, setCreateOrderData] = useState<ICreateOrderData>();
+    const [orderSessionId, setOrderSessionId] = useState<string>();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { eventId } = useParams();
 
@@ -29,6 +37,20 @@ export default function EventDetails() {
         event && event.tickets.quantityAvailable > 5
             ? 5
             : event?.tickets.quantityAvailable;
+
+    function startOrderSession() {
+        setCreateOrderData({
+            eventId: event ? event.id : -1,
+            quantity: amountOfTicketsToBuy as number,
+            ticketId: event ? event.tickets.id : -1,
+            attendee: {
+                name: "",
+                email: "",
+            },
+        });
+
+        setIsModalOpen(!isModalOpen);
+    }
 
     return (
         <div className="font-spectral mt-4 flex flex-col items-center justify-center gap-4">
@@ -79,6 +101,7 @@ export default function EventDetails() {
                     <Button
                         text="Buy Ticket!"
                         className="text-white bg-black p-2 rounded-md"
+                        onClick={startOrderSession}
                     />
                 </div>
                 <div className="flex items-center justify-center gap-1">
@@ -114,6 +137,32 @@ export default function EventDetails() {
                 <FontAwesomeIcon icon={faArrowLeft} />
                 <Button text="Go back"></Button>
             </Link>
+            <ReactModal
+                isOpen={isModalOpen}
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            >
+                {!orderSessionId && (
+                    <ChoosePaymentMethod
+                        setIsModalOpen={setIsModalOpen}
+                        setSelectedPaymentMethod={setSelectedPaymentMethod}
+                        selectedPaymentMethod={selectedPaymentMethod}
+                        createOrderData={createOrderData}
+                        setOrderSessionId={setOrderSessionId}
+                    />
+                )}
+                {orderSessionId && selectedPaymentMethod == "creditCard" && (
+                    <h1>
+                        Order session created with Id {orderSessionId}.Credit
+                        card method.
+                    </h1>
+                )}
+                {orderSessionId && selectedPaymentMethod == "paypal" && (
+                    <h1>
+                        Order session created with Id {orderSessionId}. Paypal
+                        method.
+                    </h1>
+                )}
+            </ReactModal>
         </div>
     );
 }
