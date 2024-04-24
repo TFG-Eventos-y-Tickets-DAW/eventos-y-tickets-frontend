@@ -9,6 +9,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import ReactModal from "react-modal";
 import ChoosePaymentMethod from "../PaymentModals/ChoosePaymentMethod";
 import { ICreateOrderData } from "../../types/orders";
+import CreditCardPaymentModal from "../PaymentModals/CreditCardPaymentModal";
 
 export default function EventDetails() {
     const [event, setEvent] = useState<eventDetails>();
@@ -151,10 +152,10 @@ export default function EventDetails() {
                     />
                 )}
                 {orderSessionId && selectedPaymentMethod == "creditCard" && (
-                    <h1>
-                        Order session created with Id {orderSessionId}.Credit
-                        card method.
-                    </h1>
+                    <CreditCardPaymentModal
+                        setIsModalOpen={setIsModalOpen}
+                        setOrderSessionId={setOrderSessionId}
+                    />
                 )}
                 {orderSessionId && selectedPaymentMethod == "paypal" && (
                     <h1>
