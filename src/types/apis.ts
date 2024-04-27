@@ -17,3 +17,21 @@ export interface ErrorResponse {
     error_type?: string;
     error_detail?: string;
 }
+
+export interface IPayOrderResponseCard {
+    orderId: number;
+    quantity: number;
+    ticketId: number;
+    status: "COMPLETED";
+    total: number;
+}
+
+export interface IPayOrderResponsePaypal {
+    orderId: number;
+    quantity: number;
+    ticketId: number;
+    status: "PAYER_ACTION_REQUIRED";
+    total: number;
+    paypalOrderId: string;
+    redirectUrl: string;
+}

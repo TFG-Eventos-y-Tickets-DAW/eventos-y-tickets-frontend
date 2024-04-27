@@ -2,67 +2,133 @@ import { useState } from "react";
 import Button from "../../Utils/Button";
 import creditCardIcon from "../../assets/credit-card.png";
 import { SubmitHandler, useForm } from "react-hook-form";
-
-interface IformInput {
-    cardHolderName: string;
-    cardNumber: string;
-    expirationDate: string;
-    cvv: string;
-}
+import {
+    IOrderSessionData,
+    IPayment,
+    IPaymentMethodCreditCard,
+} from "../../types/orders";
+import { payOrder } from "../../HelperFunctions/apis";
+import toValidDateFormat from "../../HelperFunctions/toValidDateFormat";
+import PaymentSuccessful from "./PaymentSuccessful";
 
 interface IChoosePaymentMethod {
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    setOrderSessionId: React.Dispatch<React.SetStateAction<string | undefined>>;
+    setOrderSessionData: React.Dispatch<
+        React.SetStateAction<
+            IOrderSessionData | Record<string, never> | undefined
+        >
+    >;
+    orderSessionData: IOrderSessionData | Record<string, never>;
 }
 
 export default function CreditCardPaymentModal({
     setIsModalOpen,
-    setOrderSessionId,
+    setOrderSessionData,
+    orderSessionData,
 }: IChoosePaymentMethod) {
-    const [isLoading, SetIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [payment, setPayment] = useState<IPayment>();
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<IformInput>();
+    } = useForm<IPaymentMethodCreditCard>();
 
-    const onSubmit: SubmitHandler<IformInput> = async (data) => {
-        // SetIsLoading(true);
-        console.log(data);
+    const onSubmit: SubmitHandler<IPaymentMethodCreditCard> = async (data) => {
+        const formattedDate: IPaymentMethodCreditCard = {
+            ...data,
+            expiry: toValidDateFormat(data.expiry),
+        };
+
+        setIsLoading(true);
+        setPayment((payment) => {
+            return { ...(payment as IPayment), isPending: true };
+        });
+        const processPaymentResponse = await payOrder(
+            orderSessionData as IOrderSessionData,
+            formattedDate,
+            "CREDIT"
+        );
+
+        if (processPaymentResponse.error_type) {
+            setIsLoading(false);
+            setPayment((payment) => {
+                return {
+                    ...(payment as IPayment),
+                    unsuccessfulMessage:
+                        "Payment failed, please review credit card details or try again later.",
+                    isPending: false,
+                };
+            });
+
+            return;
+        }
+
+        setPayment((payment) => {
+            return {
+                ...(payment as IPayment),
+                isPending: false,
+                isSuccessful: true,
+            };
+        });
+
+        setIsLoading(false);
     };
 
     function onCancelOrder() {
         setIsModalOpen(false);
-        setOrderSessionId("");
+        setOrderSessionData({});
+    }
+
+    function paymentSuccessfulReset() {
+        setIsModalOpen(false);
+        setOrderSessionData({});
     }
 
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="bg-white flex flex-col items-center justify-center w-72 border border-black rounded-lg gap-6 font-spectral"
+            className="bg-white flex flex-col items-center justify-center w-72 border border-black rounded-lg gap-5 font-spectral"
         >
             <h1 className="w-full font-karla font-bold bg-black text-white text-center p-3 rounded-t-lg">
                 Buy Tickets
             </h1>
-            {isLoading && <h1>Loading...</h1>}
-            {!isLoading && (
+            {isLoading && payment?.isPending && <h1>Loading...</h1>}
+            {!isLoading && !payment?.isPending && (
+                <>
+                    {payment?.isSuccessful && (
+                        <PaymentSuccessful
+                            paymentSuccessfulReset={paymentSuccessfulReset}
+                            orderSessionData={orderSessionData}
+                        />
+                    )}
+                    {!payment?.isSuccessful && payment?.unsuccessfulMessage && (
+                        <div className="text-center font-bold text-failure-red underline mt-2">
+                            {payment?.unsuccessfulMessage}
+                        </div>
+                    )}
+                </>
+            )}
+            {!payment?.isSuccessful && (
+                <img
+                    src={creditCardIcon}
+                    alt="credit-card-image"
+                    className="max-w-36"
+                />
+            )}
+            {!isLoading && !payment?.isSuccessful && (
                 <>
                     <div className="flex flex-col items-center justify-center gap-4 w-full">
-                        <img
-                            src={creditCardIcon}
-                            alt="credit-card-image"
-                            className="max-w-36"
-                        />
                         <div>
                             <input
                                 type="text"
                                 placeholder="Card Holder Name..."
                                 className="border-[0.5px] border-black rounded-sm p-1 w-52"
-                                {...register("cardHolderName", {
+                                {...register("cardholderName", {
                                     required: true,
                                 })}
                             />
-                            {errors.cardHolderName && (
+                            {errors.cardholderName && (
                                 <p className="font-karla text-sm text-red-links font-bold">
                                     This field is required.
                                 </p>
@@ -117,7 +183,7 @@ export default function CreditCardPaymentModal({
                                 type="text"
                                 placeholder="MM/YYYY"
                                 className="border-[0.5px] border-black rounded-sm p-1 w-24"
-                                {...register("expirationDate", {
+                                {...register("expiry", {
                                     required: true,
                                     pattern: {
                                         value: /^([01][1-9]\/20[2-9][1-9])$/,
@@ -126,9 +192,9 @@ export default function CreditCardPaymentModal({
                                     maxLength: 7,
                                 })}
                             />
-                            {errors.expirationDate && (
+                            {errors.expiry && (
                                 <p className="font-karla text-[10px] text-red-links font-bold absolute w-28">
-                                    {errors.expirationDate.message ||
+                                    {errors.expiry.message ||
                                         "This field is required."}
                                 </p>
                             )}
@@ -141,7 +207,7 @@ export default function CreditCardPaymentModal({
                                 {...register("cvv", {
                                     required: true,
                                     pattern: {
-                                        value: /^([1-9][1-9][1-9])$/,
+                                        value: /^([0-9][0-9][0-9])$/,
                                         message: "Invalid cvv.",
                                     },
                                     maxLength: 3,
@@ -162,7 +228,7 @@ export default function CreditCardPaymentModal({
                             onClick={onCancelOrder}
                         />
                         <Button
-                            text="Continue"
+                            text={"Pay $" + orderSessionData.total}
                             className="text-white bg-black p-2 rounded-md mb-6"
                             type="submit"
                         />

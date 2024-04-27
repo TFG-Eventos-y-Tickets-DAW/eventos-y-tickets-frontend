@@ -8,18 +8,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import ReactModal from "react-modal";
 import ChoosePaymentMethod from "../PaymentModals/ChoosePaymentMethod";
-import { ICreateOrderData } from "../../types/orders";
+import { ICreateOrderData, IOrderSessionData } from "../../types/orders";
 import CreditCardPaymentModal from "../PaymentModals/CreditCardPaymentModal";
 
 export default function EventDetails() {
     const [event, setEvent] = useState<eventDetails>();
-    const [amountOfTicketsToBuy, setAmountOfTicketsToBuy] = useState<
-        number | string
-    >(1);
+    const [amountOfTicketsToBuy, setAmountOfTicketsToBuy] = useState<number>(1);
     const [selectedPaymentMethod, setSelectedPaymentMethod] =
         useState<string>("paypal");
     const [createOrderData, setCreateOrderData] = useState<ICreateOrderData>();
-    const [orderSessionId, setOrderSessionId] = useState<string>();
+    const [orderSessionData, setOrderSessionData] = useState<
+        IOrderSessionData | Record<string, never>
+    >();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { eventId } = useParams();
@@ -42,7 +42,7 @@ export default function EventDetails() {
     function startOrderSession() {
         setCreateOrderData({
             eventId: event ? event.id : -1,
-            quantity: amountOfTicketsToBuy as number,
+            quantity: amountOfTicketsToBuy,
             ticketId: event ? event.tickets.id : -1,
             attendee: {
                 name: "",
@@ -110,9 +110,9 @@ export default function EventDetails() {
                         name="ticketsToBuy"
                         id="amountOfTickets"
                         className="text-white bg-black rounded-md p-1 border-r-4 border-black"
-                        onChange={(e) =>
-                            setAmountOfTicketsToBuy(e.target.value)
-                        }
+                        onChange={(e) => {
+                            setAmountOfTicketsToBuy(parseInt(e.target.value));
+                        }}
                         value={amountOfTicketsToBuy}
                     >
                         {Array.from({ length: ticketsAvailable as number }).map(
@@ -142,27 +142,30 @@ export default function EventDetails() {
                 isOpen={isModalOpen}
                 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
             >
-                {!orderSessionId && (
+                {!orderSessionData?.orderSessionId && (
                     <ChoosePaymentMethod
                         setIsModalOpen={setIsModalOpen}
                         setSelectedPaymentMethod={setSelectedPaymentMethod}
                         selectedPaymentMethod={selectedPaymentMethod}
                         createOrderData={createOrderData}
-                        setOrderSessionId={setOrderSessionId}
+                        setOrderSessionData={setOrderSessionData}
                     />
                 )}
-                {orderSessionId && selectedPaymentMethod == "creditCard" && (
-                    <CreditCardPaymentModal
-                        setIsModalOpen={setIsModalOpen}
-                        setOrderSessionId={setOrderSessionId}
-                    />
-                )}
-                {orderSessionId && selectedPaymentMethod == "paypal" && (
-                    <h1>
-                        Order session created with Id {orderSessionId}. Paypal
-                        method.
-                    </h1>
-                )}
+                {orderSessionData?.orderSessionId &&
+                    selectedPaymentMethod == "creditCard" && (
+                        <CreditCardPaymentModal
+                            setIsModalOpen={setIsModalOpen}
+                            setOrderSessionData={setOrderSessionData}
+                            orderSessionData={orderSessionData}
+                        />
+                    )}
+                {orderSessionData?.orderSessionId &&
+                    selectedPaymentMethod == "paypal" && (
+                        <h1>
+                            Order session created with Id{" "}
+                            {orderSessionData.orderSessionId}. Paypal method.
+                        </h1>
+                    )}
             </ReactModal>
         </div>
     );

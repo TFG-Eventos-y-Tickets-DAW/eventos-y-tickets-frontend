@@ -7,3 +7,22 @@ export interface ICreateOrderData {
         email: string;
     };
 }
+
+export interface IOrderSessionData {
+    orderSessionId: number;
+    total: number;
+    eventId: number;
+}
+
+export interface IPaymentMethodCreditCard {
+    cardholderName: string;
+    cardNumber: string;
+    expiry: string;
+    cvv: string;
+}
+
+export interface IPayment {
+    isPending: boolean;
+    isSuccessful: boolean;
+    unsuccessfulMessage: string;
+}

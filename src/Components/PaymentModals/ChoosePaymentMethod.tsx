@@ -2,7 +2,7 @@ import paypalIcon from "../../assets/paypal.png";
 import creditCardIcon from "../../assets/credit-card.png";
 import Button from "../../Utils/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ICreateOrderData } from "../../types/orders";
+import { ICreateOrderData, IOrderSessionData } from "../../types/orders";
 import { createOrderSession } from "../../HelperFunctions/apis";
 import { useState } from "react";
 
@@ -10,7 +10,11 @@ interface IChoosePaymentMethod {
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
     selectedPaymentMethod: string | undefined;
     setSelectedPaymentMethod: React.Dispatch<React.SetStateAction<string>>;
-    setOrderSessionId: React.Dispatch<React.SetStateAction<string | undefined>>;
+    setOrderSessionData: React.Dispatch<
+        React.SetStateAction<
+            IOrderSessionData | Record<string, never> | undefined
+        >
+    >;
     createOrderData: ICreateOrderData | undefined;
 }
 
@@ -24,7 +28,7 @@ export default function ChoosePaymentMethod({
     selectedPaymentMethod,
     setSelectedPaymentMethod,
     createOrderData,
-    setOrderSessionId,
+    setOrderSessionData,
 }: IChoosePaymentMethod) {
     const [isLoading, SetIsLoading] = useState<boolean>(false);
     const {
@@ -40,9 +44,9 @@ export default function ChoosePaymentMethod({
             attendee: data,
         };
 
-        const orderSessionId = await createOrderSession(createOrderPayload);
+        const orderSessionData = await createOrderSession(createOrderPayload);
 
-        setOrderSessionId(orderSessionId);
+        setOrderSessionData(orderSessionData);
     };
 
     return (
