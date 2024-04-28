@@ -1,5 +1,16 @@
-import { LoginResponse, ErrorResponse, ISignInResponse } from "../types/apis";
+import {
+    LoginResponse,
+    ErrorResponse,
+    ISignInResponse,
+    IPayOrderResponseCard,
+    IPayOrderResponsePaypal,
+} from "../types/apis";
 import { eventDetails } from "../types/event";
+import {
+    ICreateOrderData,
+    IOrderSessionData,
+    IPaymentMethodCreditCard,
+} from "../types/orders";
 
 export const serverUrl: string = "https://api.eventngreet.com/";
 
@@ -73,4 +84,44 @@ export async function signUp(newUserData: {
     const responseJson: ISignInResponse & ErrorResponse = await response.json();
 
     return responseJson;
+}
+
+export async function createOrderSession(createOrderData: ICreateOrderData) {
+    const orderSessionId = await fetch(`${serverUrl}/api/v1/order/create`, {
+        method: "POST",
+        body: JSON.stringify(createOrderData),
+    }).then((res) => res.json());
+
+    return {
+        orderSessionId: orderSessionId.orderId,
+        total: orderSessionId.total,
+        eventId: orderSessionId.eventId,
+    };
+}
+
+export async function payOrder(
+    orderSessionData: IOrderSessionData,
+    paymentMethodDetails: IPaymentMethodCreditCard,
+    paymentMethod: "CREDIT" | "PAYPAL"
+) {
+    const paymentMethodInformation =
+        paymentMethod === "CREDIT" ? paymentMethodDetails : {};
+
+    const bodyParameters = {
+        eventId: orderSessionData.eventId,
+        paymentMethod: paymentMethod,
+        paymentMethodDetails: paymentMethodInformation,
+    };
+
+    const payOrderResponse:
+        | (IPayOrderResponseCard & ErrorResponse)
+        | (IPayOrderResponsePaypal & ErrorResponse) = await fetch(
+        `${serverUrl}/api/v1/order/${orderSessionData.orderSessionId}/pay`,
+        {
+            method: "POST",
+            body: JSON.stringify(bodyParameters),
+        }
+    ).then((res) => res.json());
+
+    return payOrderResponse;
 }
