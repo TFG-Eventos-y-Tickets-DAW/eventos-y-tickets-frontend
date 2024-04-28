@@ -7,6 +7,7 @@ import pageEvents from "../../types/pageEvents";
 import pagination from "../../types/pagination";
 import { fetchPublicEvents } from "../../HelperFunctions/apis";
 import { Link } from "react-router-dom";
+import CardSkeleton from "../../Utils/CardSkeleton";
 
 function findEventByNumPage(numPage: number, events: pageEvents[]) {
     return (
@@ -21,6 +22,7 @@ export default function Home() {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [maxEventsPage, setMaxEventsPage] = useState<number>();
     const [paginationData, setPaginationData] = useState<pagination>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         async function fetchData() {
@@ -44,6 +46,7 @@ export default function Home() {
         }
 
         fetchData();
+        setTimeout(() => setIsLoading(false), 1000);
     }, []);
 
     async function fetchNextPage(nextPageToken: string) {
@@ -176,6 +179,7 @@ export default function Home() {
 
             <div className="flex flex-col gap-10 py-6">
                 {shownEvents &&
+                    !isLoading &&
                     findEventByNumPage(currentPage, shownEvents).events.map(
                         (event) => (
                             <Link to={`/eventdetails/${event.id}`}>
@@ -183,6 +187,9 @@ export default function Home() {
                             </Link>
                         )
                     )}
+                {isLoading &&
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    Array.from({ length: 5 }).map((_e) => <CardSkeleton />)}
             </div>
 
             <div className="font-spectral font-bold flex justify-center items-center gap-2">
