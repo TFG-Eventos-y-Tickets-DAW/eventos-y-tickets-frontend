@@ -5,6 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ICreateOrderData, IOrderSessionData } from "../../types/orders";
 import { createOrderSession } from "../../HelperFunctions/apis";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 interface IChoosePaymentMethod {
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -57,7 +59,12 @@ export default function ChoosePaymentMethod({
             <h1 className="w-full font-karla font-bold bg-black text-white text-center p-3 rounded-t-lg">
                 Buy Tickets
             </h1>
-            {isLoading && <h1>Loading...</h1>}
+            {isLoading && (
+                <FontAwesomeIcon
+                    icon={faSpinner}
+                    className="animate-spin text-2xl py-4"
+                />
+            )}
             {!isLoading && (
                 <>
                     <div className="px-8 flex flex-col gap-4 font-spectral">

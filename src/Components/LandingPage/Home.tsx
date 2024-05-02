@@ -43,10 +43,10 @@ export default function Home() {
             setMaxEventsPage(
                 publicEventsData.paginationTokensPerPage.length + 1
             );
+            setTimeout(() => setIsLoading(false), 1000);
         }
 
         fetchData();
-        setTimeout(() => setIsLoading(false), 1000);
     }, []);
 
     async function fetchNextPage(nextPageToken: string) {

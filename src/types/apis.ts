@@ -35,3 +35,13 @@ export interface IPayOrderResponsePaypal {
     paypalOrderId: string;
     redirectUrl: string;
 }
+
+export interface IPaypalOrderStatus {
+    status:
+        | "PAYER_ACTION_REQUIRED"
+        | "APPROVED"
+        | "COMPLETED"
+        | "UNKNOWN"
+        | "ABANDONED";
+    message?: string;
+}
