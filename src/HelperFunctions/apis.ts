@@ -4,6 +4,7 @@ import {
     ISignInResponse,
     IPayOrderResponseCard,
     IPayOrderResponsePaypal,
+    IPaypalOrderStatus,
 } from "../types/apis";
 import { eventDetails } from "../types/event";
 import {
@@ -101,8 +102,8 @@ export async function createOrderSession(createOrderData: ICreateOrderData) {
 
 export async function payOrder(
     orderSessionData: IOrderSessionData,
-    paymentMethodDetails: IPaymentMethodCreditCard,
-    paymentMethod: "CREDIT" | "PAYPAL"
+    paymentMethod: "CREDIT" | "PAYPAL",
+    paymentMethodDetails?: IPaymentMethodCreditCard
 ) {
     const paymentMethodInformation =
         paymentMethod === "CREDIT" ? paymentMethodDetails : {};
@@ -124,4 +125,46 @@ export async function payOrder(
     ).then((res) => res.json());
 
     return payOrderResponse;
+}
+
+export async function getPaypalOrderStatus(
+    paypalOrderId: string,
+    orderId: number
+) {
+    const paypalOrderStatus: IPaypalOrderStatus & ErrorResponse = await fetch(
+        `${serverUrl}/api/v1/order/${orderId}/paypal/${paypalOrderId}`
+    ).then((response) => response.json());
+
+    return paypalOrderStatus;
+}
+
+export async function catchPaypalOrder(paypalOrderId: string) {
+    const paypalOrderStatus: IPaypalOrderStatus & ErrorResponse = await fetch(
+        `${serverUrl}/api/v1/order/paypal/capture`,
+        {
+            method: "POST",
+            body: JSON.stringify({ paypalOrderId: paypalOrderId }),
+        }
+    ).then((response) => response.json());
+
+    return paypalOrderStatus;
+}
+
+export async function abandonPaypalOrder(
+    orderSessionData: IOrderSessionData,
+    orderId: number
+) {
+    const paypalOrderStatus: IPaypalOrderStatus & ErrorResponse = await fetch(
+        `${serverUrl}/api/v1/order/abandon`,
+        {
+            method: "POST",
+            body: JSON.stringify({
+                orderSessionId: orderSessionData.orderSessionId,
+                eventId: orderSessionData.eventId,
+                orderId: orderId,
+            }),
+        }
+    ).then((response) => response.json());
+
+    return paypalOrderStatus;
 }

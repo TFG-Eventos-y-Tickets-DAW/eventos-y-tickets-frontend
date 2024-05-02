@@ -11,6 +11,7 @@ import ChoosePaymentMethod from "../PaymentModals/ChoosePaymentMethod";
 import { ICreateOrderData, IOrderSessionData } from "../../types/orders";
 import CreditCardPaymentModal from "../PaymentModals/CreditCardPaymentModal";
 import CardDetailsSkeleton from "../../Utils/CardDetailsSkeleton";
+import PaypalPaymentMethod from "../PaymentModals/PaypalPaymentMethod";
 
 export default function EventDetails() {
     const [event, setEvent] = useState<eventDetails>();
@@ -31,10 +32,10 @@ export default function EventDetails() {
             const eventData = await getEventById(eventId);
 
             setEvent(eventData);
+            setTimeout(() => setIsLoading(false), 1000);
         };
 
         getEventData();
-        setTimeout(() => setIsLoading(false), 1000);
     }, [eventId]);
 
     const ticketsAvailable: number | undefined =
@@ -174,10 +175,11 @@ export default function EventDetails() {
                     )}
                 {orderSessionData?.orderSessionId &&
                     selectedPaymentMethod == "paypal" && (
-                        <h1>
-                            Order session created with Id{" "}
-                            {orderSessionData.orderSessionId}. Paypal method.
-                        </h1>
+                        <PaypalPaymentMethod
+                            setIsModalOpen={setIsModalOpen}
+                            setOrderSessionData={setOrderSessionData}
+                            orderSessionData={orderSessionData}
+                        />
                     )}
             </ReactModal>
         </div>

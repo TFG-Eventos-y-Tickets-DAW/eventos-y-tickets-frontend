@@ -3,16 +3,23 @@ interface MyButtonProps {
     text?: string;
     type?: "button" | "submit" | "reset";
     onClick?: () => void;
+    disabled?: boolean;
 }
 
 export default function Button({
     className = "",
     text = "Missing Text Prop",
     type = "button",
+    disabled = false,
     onClick,
 }: MyButtonProps) {
     return (
-        <button className={className} type={type} onClick={onClick}>
+        <button
+            className={className}
+            type={type}
+            onClick={onClick}
+            disabled={disabled}
+        >
             {text}
         </button>
     );

@@ -10,8 +10,10 @@ import {
 import { payOrder } from "../../HelperFunctions/apis";
 import toValidDateFormat from "../../HelperFunctions/toValidDateFormat";
 import PaymentSuccessful from "./PaymentSuccessful";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-interface IChoosePaymentMethod {
+interface ICreditCardPayment {
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setOrderSessionData: React.Dispatch<
         React.SetStateAction<
@@ -25,7 +27,7 @@ export default function CreditCardPaymentModal({
     setIsModalOpen,
     setOrderSessionData,
     orderSessionData,
-}: IChoosePaymentMethod) {
+}: ICreditCardPayment) {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [payment, setPayment] = useState<IPayment>();
     const {
@@ -35,7 +37,7 @@ export default function CreditCardPaymentModal({
     } = useForm<IPaymentMethodCreditCard>();
 
     const onSubmit: SubmitHandler<IPaymentMethodCreditCard> = async (data) => {
-        const formattedDate: IPaymentMethodCreditCard = {
+        const formattedData: IPaymentMethodCreditCard = {
             ...data,
             expiry: toValidDateFormat(data.expiry),
         };
@@ -46,8 +48,8 @@ export default function CreditCardPaymentModal({
         });
         const processPaymentResponse = await payOrder(
             orderSessionData as IOrderSessionData,
-            formattedDate,
-            "CREDIT"
+            "CREDIT",
+            formattedData
         );
 
         if (processPaymentResponse.error_type) {
@@ -93,7 +95,12 @@ export default function CreditCardPaymentModal({
             <h1 className="w-full font-karla font-bold bg-black text-white text-center p-3 rounded-t-lg">
                 Buy Tickets
             </h1>
-            {isLoading && payment?.isPending && <h1>Loading...</h1>}
+            {isLoading && payment?.isPending && (
+                <FontAwesomeIcon
+                    icon={faSpinner}
+                    className="animate-spin text-2xl py-4"
+                />
+            )}
             {!isLoading && !payment?.isPending && (
                 <>
                     {payment?.isSuccessful && (
