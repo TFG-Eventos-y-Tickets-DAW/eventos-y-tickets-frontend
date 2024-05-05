@@ -58,7 +58,7 @@ export default function EventDetails() {
     }
 
     return (
-        <div className="font-spectral mt-4 flex flex-col items-center justify-center gap-4">
+        <div className="font-spectral mt-4 flex flex-col items-center justify-center gap-4 mb-10">
             {!localStorage.getItem("jwt") && !isLoading && (
                 <p className="font-karla text-sm border-t-2 border-b-2 border-red-links text-center w-full">
                     Reminder: you need to{" "}

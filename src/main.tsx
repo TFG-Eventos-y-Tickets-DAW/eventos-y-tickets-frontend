@@ -9,6 +9,7 @@ import UserMenu from "./Components/UserOptions/UserMenu.tsx";
 import SignIn from "./Components/Auth/SignUp/SignUp.tsx";
 import EventDetails from "./Components/EventDetails/EventDetails.tsx";
 import PaypalCaptureOrder from "./Components/PaymentModals/PaypalCaptureOrder.tsx";
+import UserTickets from "./Components/UserOptions/UserTickets.tsx";
 
 const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path: "/user/menu",
                 element: <UserMenu />,
+            },
+            {
+                path: "/user/tickets",
+                element: <UserTickets />,
             },
         ],
     },

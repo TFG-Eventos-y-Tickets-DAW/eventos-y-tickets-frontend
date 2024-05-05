@@ -6,7 +6,7 @@ import {
     IPayOrderResponsePaypal,
     IPaypalOrderStatus,
 } from "../types/apis";
-import { eventDetails } from "../types/event";
+import { ITickets, eventDetails } from "../types/event";
 import {
     ICreateOrderData,
     IOrderSessionData,
@@ -89,6 +89,9 @@ export async function signUp(newUserData: {
 
 export async function createOrderSession(createOrderData: ICreateOrderData) {
     const orderSessionId = await fetch(`${serverUrl}/api/v1/order/create`, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
         method: "POST",
         body: JSON.stringify(createOrderData),
     }).then((res) => res.json());
@@ -167,4 +170,17 @@ export async function abandonPaypalOrder(
     ).then((response) => response.json());
 
     return paypalOrderStatus;
+}
+
+export async function getCurrentUserTickets() {
+    const tickets: ITickets & ErrorResponse = await fetch(
+        `${serverUrl}/api/v1/tickets`,
+        {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        }
+    ).then((response) => response.json());
+
+    return tickets.tickets;
 }
