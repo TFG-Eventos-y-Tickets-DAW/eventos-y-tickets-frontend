@@ -9,3 +9,15 @@
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
         1px 1px 0 black;
 }
+
+input:focus {
+    outline-color: black;
+}
+
+textarea:focus {
+    outline-color: black;
+}
+
+select:focus {
+    outline-color: black;
+}

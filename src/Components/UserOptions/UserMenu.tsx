@@ -33,7 +33,7 @@ export default function UserMenu() {
                         className="text-white text-lg bg-black rounded-md w-full py-2 drop-shadow-2xl"
                     />
                 </Link>
-                <Link to={"#"}>
+                <Link to={"/user/event/create"}>
                     <Button
                         text="Create Event"
                         className="text-white text-lg bg-black rounded-md w-full py-2 drop-shadow-2xl"
@@ -45,13 +45,12 @@ export default function UserMenu() {
                         className="text-white text-lg bg-black rounded-md w-full py-2 drop-shadow-2xl"
                     />
                 </Link>
-                <Link to={"#"}>
-                    <Button
-                        text="Log Out"
-                        className="text-white text-lg bg-black rounded-md w-full py-2 drop-shadow-2xl"
-                        onClick={logout}
-                    />
-                </Link>
+
+                <Button
+                    text="Log Out"
+                    className="text-white text-lg bg-black rounded-md w-full py-2 drop-shadow-2xl"
+                    onClick={logout}
+                />
             </div>
         </div>
     );

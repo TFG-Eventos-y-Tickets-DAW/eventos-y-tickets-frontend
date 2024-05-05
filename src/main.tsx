@@ -10,6 +10,7 @@ import SignIn from "./Components/Auth/SignUp/SignUp.tsx";
 import EventDetails from "./Components/EventDetails/EventDetails.tsx";
 import PaypalCaptureOrder from "./Components/PaymentModals/PaypalCaptureOrder.tsx";
 import UserTickets from "./Components/UserOptions/UserTickets.tsx";
+import CreateEvent from "./Components/UserOptions/Management/CreateEvent.tsx";
 
 const router = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
             {
                 path: "/user/tickets",
                 element: <UserTickets />,
+            },
+            {
+                path: "/user/event/create",
+                element: <CreateEvent />,
             },
         ],
     },
