@@ -15,7 +15,11 @@ export default function Button({
 }: MyButtonProps) {
     return (
         <button
-            className={className}
+            className={
+                disabled
+                    ? `${className} cursor-not-allowed opacity-50`
+                    : className
+            }
             type={type}
             onClick={onClick}
             disabled={disabled}

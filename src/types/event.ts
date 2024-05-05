@@ -57,3 +57,21 @@ export interface eventDetails {
         type: "FREE" | "PAID";
     };
 }
+
+export interface ITicket {
+    orderId: number;
+    eventId: number;
+    price: number;
+    quantity: number;
+    title: string;
+    description: string;
+    imgSrc: string;
+    startsAt: string;
+    endsAt: string;
+    status: "PUBLISHED" | "FINALIZED";
+    type: "PAID" | "FREE";
+}
+
+export interface ITickets {
+    tickets: ITicket[];
+}

@@ -15,13 +15,13 @@ export default function UserMenu() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center font-karla mt-4 gap-1">
+        <div className="flex flex-col items-center justify-center font-karla mt-4 gap-1 mb-10">
             <h1 className="font-bold text-4xl text-center">
                 Welcome {user.currentUser?.firstName},
             </h1>
             <h2 className="text-xl">What are we doing today?</h2>
             <div className="shadow-2xl w-full p-4 max-w-72 font-spectral gap-4 flex flex-col">
-                <Link to={"#"}>
+                <Link to={"/user/tickets"}>
                     <Button
                         text="My Tickets"
                         className="text-white text-lg bg-black rounded-md w-full py-2 drop-shadow-2xl"

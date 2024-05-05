@@ -145,7 +145,7 @@ export default function Home() {
     }
 
     return (
-        <>
+        <div className="mb-10">
             <Hero />
 
             {/**
@@ -241,6 +241,6 @@ export default function Home() {
                     }
                 />
             </div>
-        </>
+        </div>
     );
 }
