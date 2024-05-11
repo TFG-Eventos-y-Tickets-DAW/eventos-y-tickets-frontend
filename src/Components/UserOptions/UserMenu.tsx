@@ -27,7 +27,7 @@ export default function UserMenu() {
                         className="text-white text-lg bg-black rounded-md w-full py-2 drop-shadow-2xl"
                     />
                 </Link>
-                <Link to={"#"}>
+                <Link to={"/user/events"}>
                     <Button
                         text="Manage Event"
                         className="text-white text-lg bg-black rounded-md w-full py-2 drop-shadow-2xl"

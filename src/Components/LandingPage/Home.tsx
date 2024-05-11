@@ -189,7 +189,9 @@ export default function Home() {
                     )}
                 {isLoading &&
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    Array.from({ length: 5 }).map((_e) => <CardSkeleton />)}
+                    Array.from({ length: 5 }).map((_e, i) => (
+                        <CardSkeleton key={i} />
+                    ))}
             </div>
 
             <div className="font-spectral font-bold flex justify-center items-center gap-2">

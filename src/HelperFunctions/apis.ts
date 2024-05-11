@@ -5,6 +5,9 @@ import {
     IPayOrderResponseCard,
     IPayOrderResponsePaypal,
     IPaypalOrderStatus,
+    IUploadImageToServer,
+    ICreateUpdateEventData,
+    IPreValidateResponse,
 } from "../types/apis";
 import { ITickets, eventDetails } from "../types/event";
 import {
@@ -183,4 +186,67 @@ export async function getCurrentUserTickets() {
     ).then((response) => response.json());
 
     return tickets.tickets;
+}
+
+export async function uploadEventImageToServer(img: FileList) {
+    const bodyRequestData: IUploadImageToServer & ErrorResponse = await fetch(
+        `${serverUrl}/api/v1/event/get_presigned_url?extension=png`,
+        {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        }
+    ).then((response) => response.json());
+
+    const postData = bodyRequestData.presignedPostData.fields;
+    const formData = new FormData();
+
+    formData.append("Content-Type", postData["Content-Type"]);
+    formData.append("key", postData.key);
+    formData.append("AWSAccessKeyId", postData.AWSAccessKeyId);
+    formData.append("x-amz-security-token", postData["x-amz-security-token"]);
+    formData.append("policy", postData.policy);
+    formData.append("signature", postData.signature);
+    formData.append("file", img[0]);
+
+    const statusCode = await fetch(`${bodyRequestData.presignedPostData.url}`, {
+        method: "POST",
+        body: formData,
+    }).then((response) => response.status);
+
+    if (statusCode === 204) {
+        return bodyRequestData.potentialEventImgSrc;
+    }
+
+    return {
+        error_type: "Unsuccesful api call.",
+        error_detail: "An error has occured",
+    } as ErrorResponse;
+}
+
+export async function createEvent(newEventData: ICreateUpdateEventData) {
+    const createEventResponse:
+        | (ICreateUpdateEventData & ErrorResponse)
+        | (IPreValidateResponse & ErrorResponse) = await fetch(
+        `${serverUrl}/api/v1/event/create`,
+        {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+            method: "POST",
+            body: JSON.stringify(newEventData),
+        }
+    ).then((response) => response.json());
+
+    return createEventResponse;
+}
+
+export async function getUserOwnedEvents() {
+    const userEvents = await fetch(`${serverUrl}/api/v1/event/my_events`, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+    }).then((respone) => respone.json());
+
+    console.log(userEvents);
 }

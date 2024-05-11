@@ -21,3 +21,7 @@ textarea:focus {
 select:focus {
     outline-color: black;
 }
+
+.checked-input:checked ~ .checked-span:last-child {
+    @apply translate-x-7;
+}
