@@ -29,7 +29,7 @@ export default function Navbar() {
             {/* Navbar when user is logged in */}
             {localStorage.getItem("jwt") && (
                 <div className="flex gap-2 justify-center items-center">
-                    <Link to={"#"}>
+                    <Link to={"user/events"}>
                         <Button
                             className="font-spectral bg-accent-blue text-black rounded-md py-1 px-2"
                             text="My Events"
