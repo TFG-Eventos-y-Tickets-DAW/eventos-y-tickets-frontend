@@ -12,6 +12,7 @@ import PaypalCaptureOrder from "./Components/PaymentModals/PaypalCaptureOrder.ts
 import UserTickets from "./Components/UserOptions/UserTickets.tsx";
 import CreateEvent from "./Components/UserOptions/Management/CreateEvent.tsx";
 import UserEvents from "./Components/UserOptions/UserEvents.tsx";
+import EditEvent from "./Components/UserOptions/Management/EditEvent.tsx";
 
 const router = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
             {
                 path: "/user/event/create",
                 element: <CreateEvent />,
+            },
+            {
+                path: "/user/events/edit/:eventId",
+                element: <EditEvent />,
             },
         ],
     },

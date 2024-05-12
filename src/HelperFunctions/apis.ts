@@ -8,6 +8,8 @@ import {
     IUploadImageToServer,
     ICreateUpdateEventData,
     IPreValidateResponse,
+    IOwnedEventsResponse,
+    IEventDetailsForUpdate,
 } from "../types/apis";
 import { ITickets, eventDetails } from "../types/event";
 import {
@@ -241,12 +243,48 @@ export async function createEvent(newEventData: ICreateUpdateEventData) {
     return createEventResponse;
 }
 
-export async function getUserOwnedEvents() {
-    const userEvents = await fetch(`${serverUrl}/api/v1/event/my_events`, {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        },
-    }).then((respone) => respone.json());
+export async function updateEvent(
+    updatedEventData: ICreateUpdateEventData,
+    id: string
+) {
+    const createEventResponse:
+        | (ICreateUpdateEventData & ErrorResponse)
+        | (IPreValidateResponse & ErrorResponse) = await fetch(
+        `${serverUrl}/api/v1/event/${id}`,
+        {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+            method: "PUT",
+            body: JSON.stringify(updatedEventData),
+        }
+    ).then((response) => response.json());
 
-    console.log(userEvents);
+    return createEventResponse;
+}
+
+export async function getUserOwnedEvents() {
+    const userEvents: IOwnedEventsResponse & ErrorResponse = await fetch(
+        `${serverUrl}/api/v1/event/my_events`,
+        {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        }
+    ).then((respone) => respone.json());
+
+    return userEvents.events;
+}
+
+export async function getAllEventDetailsById(id: string | undefined) {
+    const eventData: IEventDetailsForUpdate & ErrorResponse = await fetch(
+        `${serverUrl}/api/v1/event/${id}`,
+        {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        }
+    ).then((response) => response.json());
+
+    return eventData;
 }

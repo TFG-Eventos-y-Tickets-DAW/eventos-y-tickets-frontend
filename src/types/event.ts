@@ -10,7 +10,7 @@ export interface event {
     country: string;
     currency: string;
     createdAt: string;
-    price: number;
+    price?: number;
     category:
         | "MUSIC"
         | "FOOD & DRINK"
@@ -22,7 +22,7 @@ export interface event {
         | "KIDS & FAMILY"
         | "OTHER";
     status: "DRAFT" | "PUBLISHED" | "FINALIZED";
-    type: "FREE" | "PAID";
+    type?: "FREE" | "PAID";
 }
 
 export interface eventDetails {
