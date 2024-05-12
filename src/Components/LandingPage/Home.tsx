@@ -181,8 +181,8 @@ export default function Home() {
                 {shownEvents &&
                     !isLoading &&
                     findEventByNumPage(currentPage, shownEvents).events.map(
-                        (event) => (
-                            <Link to={`/eventdetails/${event.id}`}>
+                        (event, i) => (
+                            <Link to={`/eventdetails/${event.id}`} key={i}>
                                 <EventCard {...event} key={event.id} />
                             </Link>
                         )

@@ -1,3 +1,5 @@
+import { event } from "./event";
+
 export interface LoginResponse {
     accessToken?: string;
     firstName?: string;
@@ -84,9 +86,9 @@ export interface ICreateUpdateEventData {
     country: string;
     currency: string;
     payoutInstrument?: {
-        iban: string;
-        swiftbic: string;
-        paypalEmail: string;
+        iban?: string;
+        swiftbic?: string;
+        paypalEmail?: string;
     };
     tickets: {
         quantity: number;
@@ -95,7 +97,46 @@ export interface ICreateUpdateEventData {
     preValidate: boolean;
 }
 
+export interface IEventDetailsForUpdate {
+    id: number;
+    title: string;
+    address: string;
+    imgSrc: FileList | string;
+    description: string;
+    startsAt: string; // YYYY-MM-DD HH:MM:SS
+    endsAt: string;
+    category:
+        | "MUSIC"
+        | "FOOD & DRINK"
+        | "FASHION"
+        | "TECHNOLOGY"
+        | "CONFERENCE"
+        | "PARTY"
+        | "FILM"
+        | "KIDS & FAMILY"
+        | "OTHER";
+    status: boolean | string;
+    country: string;
+    currency: string;
+    payoutInstrument?: {
+        iban: string;
+        swiftbic: string;
+        paypalEmail: string;
+    };
+    ticketsConfiguration: {
+        quantity: number;
+        price: number;
+        type: "FREE" | "PAID";
+    };
+    createdAt: string;
+    ownerId: number;
+}
+
 export interface IPreValidateResponse {
     preValidate: boolean;
     message: string;
+}
+
+export interface IOwnedEventsResponse {
+    events: event[];
 }

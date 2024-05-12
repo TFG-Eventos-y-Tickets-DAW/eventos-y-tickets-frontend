@@ -6,61 +6,44 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { ITicket } from "../../types/event";
-import { getCurrentUserTickets } from "../../HelperFunctions/apis";
+import { event } from "../../types/event";
+import { getUserOwnedEvents } from "../../HelperFunctions/apis";
 import { ErrorResponse } from "../../types/apis";
 import getMonth from "../../HelperFunctions/GetMonth";
 import Button from "../../Utils/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function UserEvents() {
-    const [userTickets, setUserTickets] = useState<ITicket[]>();
-    const [selectedTicket, setSelectedTicket] = useState<ITicket>();
+    const [userOwnedEvents, setUserOwnedEvents] = useState<event[]>();
+    const [selectedEvent, setSelectedEvent] = useState<event>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        async function getUserTicketsData() {
-            const userTicketsData: ITicket[] & ErrorResponse =
-                await getCurrentUserTickets();
+    const navigate = useNavigate();
 
-            if (userTicketsData.error_type) {
-                setUserTickets([]);
+    useEffect(() => {
+        async function getUserOwnedEventsData() {
+            const userOwnedEventsData: event[] & ErrorResponse =
+                await getUserOwnedEvents();
+
+            if (userOwnedEventsData.error_type) {
+                setUserOwnedEvents([]);
                 console.log(
-                    "There was an error while trying to get user tickets, please try again later."
+                    "There was an error while trying to get user events, please try again later."
                 );
                 return;
             }
 
-            setUserTickets(userTicketsData);
+            setUserOwnedEvents(userOwnedEventsData);
             setIsLoading(false);
         }
 
-        getUserTicketsData();
+        getUserOwnedEventsData();
     }, []);
-
-    function downloadSelectedTicket() {
-        const ticket = new Blob(
-            [
-                `Ticket(s) of order ${selectedTicket?.orderId} of event ${selectedTicket?.title}`,
-            ],
-            { type: "text/plain" }
-        );
-
-        const ticketUrl = window.URL.createObjectURL(ticket);
-        const ticketLink = document.createElement("a");
-
-        ticketLink.href = ticketUrl;
-        ticketLink.setAttribute("download", `${selectedTicket?.title} Ticket`);
-
-        document.body.appendChild(ticketLink);
-        ticketLink.click();
-
-        ticketLink.parentNode?.removeChild(ticketLink);
-    }
 
     return (
         <div className="flex flex-col p-6 font-spectral gap-2 ">
             <h1 className="font-karla font-bold text-3xl drop-shadow-2xl">
-                My Tickets
+                My Events
             </h1>
             <div className="flex gap-4">
                 <div className="flex justify-center items-center bg-white px-2 gap-1 border-[1px] rounded-md border-black drop-shadow-2xl">
@@ -94,44 +77,44 @@ export default function UserEvents() {
                     />
                 )}
                 {!isLoading &&
-                    userTickets?.map((ticket) => (
+                    userOwnedEvents?.map((event) => (
                         <div
-                            key={ticket.orderId}
+                            key={event.id}
                             className={
-                                selectedTicket?.orderId === ticket.orderId
+                                selectedEvent?.id === event.id
                                     ? "flex items-center drop-shadow-2xl bg-white px-4 py-2 gap-4 rounded-md  outline outline-4 outline-blue-links"
                                     : "flex items-center drop-shadow-2xl bg-white px-4 py-2 gap-4 rounded-md "
                             }
                             onClick={() => {
-                                selectedTicket?.orderId === ticket.orderId
-                                    ? setSelectedTicket(undefined)
-                                    : setSelectedTicket(ticket);
+                                selectedEvent?.id === event.id
+                                    ? setSelectedEvent(undefined)
+                                    : setSelectedEvent(event);
                             }}
                         >
                             <img
-                                src={ticket.imgSrc}
+                                src={event.imgSrc}
                                 alt="event-image"
                                 className="aspect-square max-w-20 object-cover border border-black rounded-md"
                             />
                             <div className="flex flex-col text-sm">
                                 <h1 className="font-karla font-bold text-xl">
-                                    {ticket.title.length > 13 &&
-                                        `${ticket.title.substring(0, 13)}...`}
-                                    {ticket.title.length <= 13 && ticket.title}
+                                    {event.title.length > 13 &&
+                                        `${event.title.substring(0, 13)}...`}
+                                    {event.title.length <= 13 && event.title}
                                 </h1>
                                 <p>
                                     {`${getMonth(
-                                        ticket.startsAt.substring(3, 5)
-                                    )} ${ticket.startsAt.substring(
+                                        event.startsAt.substring(3, 5)
+                                    )} ${event.startsAt.substring(
                                         0,
                                         2
                                     )} - ${getMonth(
-                                        ticket.endsAt.substring(3, 5)
-                                    )} ${ticket.endsAt.substring(0, 2)}`}
+                                        event.endsAt.substring(3, 5)
+                                    )} ${event.endsAt.substring(0, 2)}`}
                                 </p>
-                                <p>Tickets: {ticket.quantity}</p>
+                                <p>{event.status}</p>
                                 <p>
-                                    {!(ticket.status === "FINALIZED") && (
+                                    {!(event.status === "FINALIZED") && (
                                         <span className="text-success-green flex items-center gap-0.5">
                                             <FontAwesomeIcon
                                                 icon={faCircleCheck}
@@ -141,7 +124,7 @@ export default function UserEvents() {
                                             Active
                                         </span>
                                     )}
-                                    {ticket.status === "FINALIZED" && (
+                                    {event.status === "FINALIZED" && (
                                         <span className="text-failure-red flex items-center gap-0.5">
                                             <FontAwesomeIcon
                                                 icon={faCircleXmark}
@@ -157,10 +140,10 @@ export default function UserEvents() {
                     ))}
             </div>
             <Button
-                disabled={selectedTicket === undefined ? true : false}
-                text="Download Ticket"
+                disabled={selectedEvent === undefined ? true : false}
+                text="Edit or View Event"
                 className="text-white bg-black p-2 rounded-md mb-6 drop-shadow-lg"
-                onClick={downloadSelectedTicket}
+                onClick={() => navigate(`edit/${selectedEvent?.id}`)}
             />
         </div>
     );
