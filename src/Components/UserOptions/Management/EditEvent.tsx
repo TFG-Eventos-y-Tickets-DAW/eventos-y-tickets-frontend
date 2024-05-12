@@ -4,11 +4,9 @@ import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../Utils/Button";
-import { SubmitHandler, set, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
-    createEvent,
     getAllEventDetailsById,
-    getEventById,
     updateEvent,
     uploadEventImageToServer,
 } from "../../../HelperFunctions/apis";
@@ -18,7 +16,6 @@ import {
     IEventDetailsForUpdate,
 } from "../../../types/apis";
 import createEventDateFormat from "../../../HelperFunctions/createEventDateFormat";
-import { eventDetails } from "../../../types/event";
 
 interface IFormInput {
     title: string;
