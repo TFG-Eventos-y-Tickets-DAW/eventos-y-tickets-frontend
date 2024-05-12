@@ -22,7 +22,7 @@ export interface event {
         | "KIDS & FAMILY"
         | "OTHER";
     status: "DRAFT" | "PUBLISHED" | "FINALIZED";
-    type?: "FREE" | "PAID";
+    type: "FREE" | "PAID";
 }
 
 export interface eventDetails {

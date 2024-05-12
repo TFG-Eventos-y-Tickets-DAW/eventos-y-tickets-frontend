@@ -14,7 +14,7 @@ interface event {
     country: string;
     currency: string;
     createdAt: string;
-    price: number;
+    price?: number;
     category:
         | "MUSIC"
         | "FOOD & DRINK"
