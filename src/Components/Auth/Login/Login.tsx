@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import Button from "../../../Utils/Button";
+import Button from "../../Utils/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { login } from "../../../HelperFunctions/apis";
 import { useContext, useState } from "react";

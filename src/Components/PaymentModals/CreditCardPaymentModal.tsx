@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../../Utils/Button";
+import Button from "../Utils/Button";
 import creditCardIcon from "../../assets/credit-card.png";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {

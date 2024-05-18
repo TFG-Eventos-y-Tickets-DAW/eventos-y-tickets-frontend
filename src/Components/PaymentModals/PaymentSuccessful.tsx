@@ -1,4 +1,4 @@
-import Button from "../../Utils/Button";
+import Button from "../Utils/Button";
 import { IOrderSessionData } from "../../types/orders";
 
 interface IPaymentSuccessful {

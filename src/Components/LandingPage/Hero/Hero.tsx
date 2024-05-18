@@ -1,4 +1,4 @@
-import SearchBar from "../../../Utils/SearchBar";
+import SearchBar from "../../Utils/SearchBar";
 import heroImg from "../../../assets/Hero.jpg";
 
 export default function Hero() {

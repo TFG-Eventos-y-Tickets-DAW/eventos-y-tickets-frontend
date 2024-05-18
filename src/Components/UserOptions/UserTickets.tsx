@@ -10,7 +10,7 @@ import { ITicket } from "../../types/event";
 import { getCurrentUserTickets } from "../../HelperFunctions/apis";
 import { ErrorResponse } from "../../types/apis";
 import getMonth from "../../HelperFunctions/GetMonth";
-import Button from "../../Utils/Button";
+import Button from "../Utils/Button";
 
 export default function UserTickets() {
     const [userTickets, setUserTickets] = useState<ITicket[]>();

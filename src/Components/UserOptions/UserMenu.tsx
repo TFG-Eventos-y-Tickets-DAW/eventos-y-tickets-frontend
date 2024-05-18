@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { UserContext } from "../../context/Context";
-import Button from "../../Utils/Button";
+import Button from "../Utils/Button";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function UserMenu() {

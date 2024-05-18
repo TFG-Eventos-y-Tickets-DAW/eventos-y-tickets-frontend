@@ -7,7 +7,7 @@ import pageEvents from "../../types/pageEvents";
 import pagination from "../../types/pagination";
 import { fetchPublicEvents } from "../../HelperFunctions/apis";
 import { Link } from "react-router-dom";
-import CardSkeleton from "../../Utils/CardSkeleton";
+import CardSkeleton from "../Utils/CardSkeleton";
 
 function findEventByNumPage(numPage: number, events: pageEvents[]) {
     return (

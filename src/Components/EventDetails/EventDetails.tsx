@@ -3,14 +3,14 @@ import { Link, useParams } from "react-router-dom";
 import { eventDetails } from "../../types/event";
 import { getEventById } from "../../HelperFunctions/apis";
 import getMonth from "../../HelperFunctions/GetMonth";
-import Button from "../../Utils/Button";
+import Button from "../Utils/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import ReactModal from "react-modal";
 import ChoosePaymentMethod from "../PaymentModals/ChoosePaymentMethod";
 import { ICreateOrderData, IOrderSessionData } from "../../types/orders";
 import CreditCardPaymentModal from "../PaymentModals/CreditCardPaymentModal";
-import CardDetailsSkeleton from "../../Utils/CardDetailsSkeleton";
+import CardDetailsSkeleton from "../Utils/CardDetailsSkeleton";
 import PaypalPaymentMethod from "../PaymentModals/PaypalPaymentMethod";
 
 export default function EventDetails() {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../../Utils/Button";
+import Button from "../Utils/Button";
 import { IOrderSessionData } from "../../types/orders";
 import { ErrorResponse, IPayOrderResponsePaypal } from "../../types/apis";
 import {

@@ -16,7 +16,7 @@ import {
 import { IEventDetailsForUpdate } from "../../../types/apis";
 import getEventFee from "../../../HelperFunctions/getEventFee";
 import { IEventStats } from "../../../types/event";
-import Button from "../../../Utils/Button";
+import Button from "../../Utils/Button";
 
 export function ViewEventStats() {
     const [event, setEvent] = useState<IEventDetailsForUpdate>();

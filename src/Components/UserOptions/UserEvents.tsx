@@ -10,7 +10,7 @@ import { event } from "../../types/event";
 import { getUserOwnedEvents } from "../../HelperFunctions/apis";
 import { ErrorResponse } from "../../types/apis";
 import getMonth from "../../HelperFunctions/GetMonth";
-import Button from "../../Utils/Button";
+import Button from "../Utils/Button";
 import { useNavigate } from "react-router-dom";
 
 export default function UserEvents() {

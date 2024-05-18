@@ -1,4 +1,4 @@
-import logo from "../assets/logo_transparent.png";
+import logo from "../../assets/logo_transparent.png";
 
 interface MyLogoProps {
     className?: string;

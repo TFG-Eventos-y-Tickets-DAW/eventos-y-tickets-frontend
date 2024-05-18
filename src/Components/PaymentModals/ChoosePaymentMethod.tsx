@@ -1,6 +1,6 @@
 import paypalIcon from "../../assets/paypal.png";
 import creditCardIcon from "../../assets/credit-card.png";
-import Button from "../../Utils/Button";
+import Button from "../Utils/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ICreateOrderData, IOrderSessionData } from "../../types/orders";
 import { createOrderSession } from "../../HelperFunctions/apis";
