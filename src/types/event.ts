@@ -75,3 +75,10 @@ export interface ITicket {
 export interface ITickets {
     tickets: ITicket[];
 }
+
+export interface IEventStats {
+    ticketsSold: number;
+    eventStatus: string;
+    payout: number;
+    fee: number;
+}

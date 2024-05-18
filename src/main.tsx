@@ -13,6 +13,7 @@ import UserTickets from "./Components/UserOptions/UserTickets.tsx";
 import CreateEvent from "./Components/UserOptions/Management/CreateEvent.tsx";
 import UserEvents from "./Components/UserOptions/UserEvents.tsx";
 import EditEvent from "./Components/UserOptions/Management/EditEvent.tsx";
+import { ViewEventStats } from "./Components/UserOptions/Management/ViewEventStats.tsx";
 
 const router = createBrowserRouter([
     {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
             {
                 path: "/user/events/edit/:eventId",
                 element: <EditEvent />,
+            },
+            {
+                path: "/user/events/stats/:eventId",
+                element: <ViewEventStats />,
             },
         ],
     },

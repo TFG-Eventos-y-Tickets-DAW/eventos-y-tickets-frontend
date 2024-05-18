@@ -10,6 +10,8 @@ import {
     IPreValidateResponse,
     IOwnedEventsResponse,
     IEventDetailsForUpdate,
+    IOrdersOfEventResponse,
+    IRefundOrderResponse,
 } from "../types/apis";
 import { ITickets, eventDetails } from "../types/event";
 import {
@@ -287,4 +289,36 @@ export async function getAllEventDetailsById(id: string | undefined) {
     ).then((response) => response.json());
 
     return eventData;
+}
+export async function getAllOrdersOfEvent(eventId: string, filter: string) {
+    const eventOrders: IOrdersOfEventResponse & ErrorResponse = await fetch(
+        `${serverUrl}/api/v1/orders/list/${eventId}`,
+        {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+            method: "POST",
+            body: JSON.stringify({
+                filters: {
+                    status: filter,
+                },
+            }),
+        }
+    ).then((response) => response.json());
+
+    return eventOrders;
+}
+
+export async function refundOrder(orderId: number) {
+    const refundedOrder: IRefundOrderResponse & ErrorResponse = await fetch(
+        `${serverUrl}/api/v1/order/${orderId}/refund`,
+        {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+            method: "POST",
+        }
+    ).then((response) => response.json());
+
+    return refundedOrder;
 }
