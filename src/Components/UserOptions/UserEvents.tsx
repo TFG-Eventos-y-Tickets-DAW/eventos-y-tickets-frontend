@@ -142,8 +142,19 @@ export default function UserEvents() {
             <Button
                 disabled={selectedEvent === undefined ? true : false}
                 text="Edit or View Event"
-                className="text-white bg-black p-2 rounded-md mb-6 drop-shadow-lg"
+                className="text-white bg-black p-2 rounded-md  drop-shadow-lg"
                 onClick={() => navigate(`edit/${selectedEvent?.id}`)}
+            />
+            <Button
+                disabled={
+                    selectedEvent === undefined ||
+                    selectedEvent.status === "DRAFT"
+                        ? true
+                        : false
+                }
+                text="Event Stats"
+                className="text-white bg-black p-2 rounded-md mb-6 drop-shadow-lg"
+                onClick={() => navigate(`stats/${selectedEvent?.id}`)}
             />
         </div>
     );

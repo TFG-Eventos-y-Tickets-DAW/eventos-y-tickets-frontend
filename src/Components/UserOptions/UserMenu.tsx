@@ -39,12 +39,6 @@ export default function UserMenu() {
                         className="text-white text-lg bg-black rounded-md w-full py-2 drop-shadow-2xl"
                     />
                 </Link>
-                <Link to={"#"}>
-                    <Button
-                        text="User Information"
-                        className="text-white text-lg bg-black rounded-md w-full py-2 drop-shadow-2xl"
-                    />
-                </Link>
 
                 <Button
                     text="Log Out"

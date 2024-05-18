@@ -1,4 +1,5 @@
 import { event } from "./event";
+import { IOrderDetails } from "./orders";
 
 export interface LoginResponse {
     accessToken?: string;
@@ -139,4 +140,14 @@ export interface IPreValidateResponse {
 
 export interface IOwnedEventsResponse {
     events: event[];
+}
+
+export interface IOrdersOfEventResponse {
+    orders: IOrderDetails[];
+}
+
+export interface IRefundOrderResponse {
+    orderId: number;
+    status: "REFUNDED";
+    total: number;
 }

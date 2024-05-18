@@ -26,3 +26,16 @@ export interface IPayment {
     isSuccessful: boolean;
     unsuccessfulMessage: string;
 }
+
+export interface IOrderDetails {
+    id: number;
+    quantity: number;
+    total: number;
+    firstName: string;
+    email: string;
+    cardBrand?: string;
+    cardLastDigits?: string;
+    paypalPayerEmail?: string;
+    createdAt: string;
+    paymentMethod: string;
+}

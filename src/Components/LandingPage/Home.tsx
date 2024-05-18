@@ -26,7 +26,7 @@ export default function Home() {
 
     useEffect(() => {
         async function fetchData() {
-            const publicEventsData = await fetchPublicEvents(5);
+            const publicEventsData = await fetchPublicEvents(2);
 
             setShownEvents([
                 {
