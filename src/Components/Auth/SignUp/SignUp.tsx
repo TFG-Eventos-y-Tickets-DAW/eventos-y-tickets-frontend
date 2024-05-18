@@ -14,6 +14,7 @@ interface IformInput {
 
 export default function SignIn() {
     const [errorMessage, setErrorMessage] = useState<string>();
+    const [isSigningUp, setIsSigningUp] = useState<boolean>(false);
     const {
         register,
         handleSubmit,
@@ -24,10 +25,12 @@ export default function SignIn() {
     const user = useContext(UserContext);
 
     const onSubmit: SubmitHandler<IformInput> = async (data) => {
+        setIsSigningUp(true);
         const signUpResponse = await signUp(data);
 
         if (signUpResponse.error_type) {
             setErrorMessage(signUpResponse.error_detail);
+            setIsSigningUp(false);
             return;
         }
 
@@ -40,6 +43,7 @@ export default function SignIn() {
             setErrorMessage(
                 "Account was created but there was a problem when loggin in, please try again later."
             );
+            setIsSigningUp(false);
             return;
         }
 
@@ -144,6 +148,8 @@ export default function SignIn() {
                 className="font-spectral w-full bg-accent-blue text-black font-semibold rounded-md shadow-black drop-shadow-lg py-2 px-2"
                 text="Create Account"
                 type={"submit"}
+                isLoading={isSigningUp}
+                isLoadingText="Signing up..."
             />
             <p className="text-center">
                 Have an account?{" "}

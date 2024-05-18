@@ -1,9 +1,14 @@
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 interface MyButtonProps {
     className?: string;
     text?: string;
     type?: "button" | "submit" | "reset";
     onClick?: () => void;
     disabled?: boolean;
+    isLoading?: boolean;
+    isLoadingText?: string;
 }
 
 export default function Button({
@@ -11,6 +16,8 @@ export default function Button({
     text = "Missing Text Prop",
     type = "button",
     disabled = false,
+    isLoading = false,
+    isLoadingText = "Loading...",
     onClick,
 }: MyButtonProps) {
     return (
@@ -22,9 +29,19 @@ export default function Button({
             }
             type={type}
             onClick={onClick}
-            disabled={disabled}
+            disabled={disabled || isLoading}
         >
-            {text}
+            {isLoading ? (
+                <div className="flex gap-2 items-center justify-center">
+                    <FontAwesomeIcon
+                        icon={faSpinner}
+                        className="animate-spin"
+                    />{" "}
+                    {isLoadingText}
+                </div>
+            ) : (
+                text
+            )}
         </button>
     );
 }

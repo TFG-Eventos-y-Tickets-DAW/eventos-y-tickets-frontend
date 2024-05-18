@@ -12,6 +12,7 @@ interface formInput {
 
 export default function Login() {
     const [errorMessage, setErrorMessage] = useState<string>();
+    const [isSigningIn, setIsSigningIn] = useState<boolean>(false);
     const {
         register,
         handleSubmit,
@@ -22,10 +23,12 @@ export default function Login() {
     const user = useContext(UserContext);
 
     const onSubmit: SubmitHandler<formInput> = async (data) => {
+        setIsSigningIn(true);
         const response = await login(data);
 
         if (response.error_type) {
             setErrorMessage(response.error_detail);
+            setIsSigningIn(false);
             return;
         }
 
@@ -101,6 +104,8 @@ export default function Login() {
                     className="font-spectral w-full bg-accent-blue text-black font-semibold rounded-md shadow-black drop-shadow-lg py-2 px-2"
                     text="Sign In"
                     type={"submit"}
+                    isLoading={isSigningIn}
+                    isLoadingText="Signing in..."
                 />
                 <p className="text-center text-sm">
                     New to Event&Greet?{" "}

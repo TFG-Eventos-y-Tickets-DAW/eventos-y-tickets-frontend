@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import placeholderImage from "../../../assets/placeholder.png";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../Utils/Button";
@@ -64,6 +64,7 @@ const eventCategories = [
 export default function EditEvent() {
     const [preUpdateEventData, setPreUpdateEventData] =
         useState<IEventDetailsForUpdate>();
+    const [isEditingEvent, setIsEditingEvent] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>();
     const [eventImage, setEventImage] = useState<string>(placeholderImage);
     const [typeOfEvent, setTypeOfEvent] = useState<string>();
@@ -80,6 +81,7 @@ export default function EditEvent() {
     } = useForm<IFormInput>();
 
     const file = watch("imgSrc");
+    const navigate = useNavigate();
 
     const { eventId } = useParams();
 
@@ -191,6 +193,7 @@ export default function EditEvent() {
     }
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        setIsEditingEvent(true);
         const preValidatedData: ICreateUpdateEventData =
             buildUpdateEventPayload(data);
 
@@ -203,6 +206,7 @@ export default function EditEvent() {
             setErrorMessage(
                 "An error occurred when creating the event, please try again later."
             );
+            setIsEditingEvent(false);
             return;
         }
 
@@ -232,10 +236,11 @@ export default function EditEvent() {
             setErrorMessage(
                 "An error occurred when creating the event, please try again later."
             );
+            setIsEditingEvent(false);
             return;
         }
 
-        console.log(updateEventResponse);
+        navigate("/user/events");
     };
 
     return (
@@ -672,6 +677,8 @@ export default function EditEvent() {
                     type="submit"
                     text="Update"
                     className="text-white bg-black p-2 rounded-md"
+                    isLoading={isEditingEvent}
+                    isLoadingText="Updating..."
                 ></Button>
             </div>
         </form>

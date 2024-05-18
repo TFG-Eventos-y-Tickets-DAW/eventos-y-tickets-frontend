@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import placeholderImage from "../../../assets/placeholder.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../Utils/Button";
@@ -58,6 +58,7 @@ const eventCategories = [
 
 export default function CreateEvent() {
     const [errorMessage, setErrorMessage] = useState<string>();
+    const [isCreatingEvent, setIsCreatingEvent] = useState<boolean>(false);
     const [eventImage, setEventImage] = useState<string>(placeholderImage);
     const [typeOfEvent, setTypeOfEvent] = useState<string>();
     const [selectedPaymentMethod, setSelectedPaymentMethod] =
@@ -71,6 +72,7 @@ export default function CreateEvent() {
     } = useForm<IFormInput>();
 
     const file = watch("imgSrc");
+    const navigate = useNavigate();
 
     useEffect(() => {
         reset({
@@ -90,7 +92,7 @@ export default function CreateEvent() {
     }, [file, setEventImage]);
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        console.log(data);
+        setIsCreatingEvent(true);
 
         const preValidatedData: ICreateUpdateEventData = {
             ...data,
@@ -111,6 +113,7 @@ export default function CreateEvent() {
             setErrorMessage(
                 "An error occurred when creating the event, please try again later."
             );
+            setIsCreatingEvent(false);
             return;
         }
 
@@ -128,10 +131,11 @@ export default function CreateEvent() {
             setErrorMessage(
                 "An error occurred when creating the event, please try again later."
             );
+            setIsCreatingEvent(false);
             return;
         }
 
-        console.log(createEventResponse);
+        navigate("/user/events");
     };
 
     return (
@@ -554,6 +558,8 @@ export default function CreateEvent() {
                     type="submit"
                     text="Create"
                     className="text-white bg-black p-2 rounded-md"
+                    isLoading={isCreatingEvent}
+                    isLoadingText="Creating..."
                 ></Button>
             </div>
         </form>
