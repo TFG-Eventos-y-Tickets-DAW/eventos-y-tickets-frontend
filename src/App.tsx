@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Footer from "./Static/Footer";
-import Navbar from "./Static/Navbar";
+import Footer from "./Components/Static/Footer";
+import Navbar from "./Components/Static/Navbar";
 import { UserContext } from "./context/Context";
 import "./index.css";
 import { Outlet } from "react-router-dom";

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Button from "../Components/Utils/Button";
-import Logo from "../Components/Utils/Logo";
-import avatar from "../assets/avatar_placeholder.png";
+import Button from "../Utils/Button";
+import Logo from "../Utils/Logo";
+import avatar from "../../assets/avatar_placeholder.png";
 
 export default function Navbar() {
     return (
