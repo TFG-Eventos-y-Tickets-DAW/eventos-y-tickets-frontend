@@ -161,13 +161,13 @@ export default function Home() {
                     Events
                 </h1>
                 <ul className="font-karla font-semibold flex justify-evenly items-center gap-4 lg:max-w-96 lg:self-center md:max-w-96 md:self-center">
-                    <li className="text-lg border-2 border-black w-full text-center rounded-md text-white bg-black lg:w-28 lg:text-2xl md:w-32 md:text-2xl">
+                    <li className="text-lg border-2 border-black w-full text-center rounded-md text-white bg-black lg:w-28 lg:text-2xl md:w-32 md:text-2xl cursor-pointer">
                         All
                     </li>
-                    <li className="text-lg border-2 border-black w-full text-center rounded-md lg:w-28 lg:text-2xl md:w-32 md:text-2xl">
+                    <li className="text-lg border-2 border-black w-full text-center rounded-md lg:w-28 lg:text-2xl md:w-32 md:text-2xl cursor-pointer">
                         Popular
                     </li>
-                    <li className="text-lg border-2 border-black w-full text-center rounded-md lg:w-28 lg:text-2xl md:w-32 md:text-2xl">
+                    <li className="text-lg border-2 border-black w-full text-center rounded-md lg:w-28 lg:text-2xl md:w-32 md:text-2xl cursor-pointer">
                         New
                     </li>
                 </ul>
@@ -199,15 +199,15 @@ export default function Home() {
             <div className="font-spectral font-bold flex justify-center items-center gap-2 lg:gap-3 lg:mt-4 md:gap-3 md:mt-4">
                 <FontAwesomeIcon
                     icon={faArrowLeft}
-                    className="text-xl lg:text-3xl md:text-3xl"
+                    className="text-xl cursor-pointer lg:text-3xl md:text-3xl"
                     onClick={fetchPreviousPage}
                 />
                 <ul className="flex justify-center items-center lg:text-2xl lg:gap-1 md:text-2xl md:gap-1">
                     <li
                         className={
                             currentPage == 1
-                                ? "text-white bg-secondary-black-lighter px-1.5  rounded-md"
-                                : " px-2 py-1 rounded-md"
+                                ? "text-white bg-secondary-black-lighter px-1.5  rounded-md cursor-pointer"
+                                : " px-2 py-1 rounded-md cursor-pointer"
                         }
                         onClick={() => fetchPage(1, "firstPage")}
                     >
@@ -219,8 +219,8 @@ export default function Home() {
                                 key={page.pageNum}
                                 className={
                                     page.pageNum == currentPage
-                                        ? "text-white bg-secondary-black-lighter px-1.5  rounded-md"
-                                        : " px-2 py-1 rounded-md"
+                                        ? "text-white bg-secondary-black-lighter px-1.5  rounded-md cursor-pointer"
+                                        : " px-2 py-1 rounded-md cursor-pointer"
                                 }
                                 onClick={() =>
                                     fetchPage(
@@ -235,7 +235,7 @@ export default function Home() {
                 </ul>
                 <FontAwesomeIcon
                     icon={faArrowRight}
-                    className="text-xl lg:text-3xl md:text-3xl"
+                    className="text-xl lg:text-3xl md:text-3xl cursor-pointer"
                     onClick={() =>
                         fetchNextPage(
                             paginationData

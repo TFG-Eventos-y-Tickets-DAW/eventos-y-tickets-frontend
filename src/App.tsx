@@ -21,11 +21,13 @@ function App() {
     };
 
     return (
-        <UserContext.Provider value={userInfo}>
-            <Navbar />
-            <Outlet />
-            <Footer />
-        </UserContext.Provider>
+        <div className="max-w-6xl m-auto bg-white">
+            <UserContext.Provider value={userInfo}>
+                <Navbar />
+                <Outlet />
+                <Footer />
+            </UserContext.Provider>
+        </div>
     );
 }
 export default App;

@@ -25,3 +25,7 @@ select:focus {
 .checked-input:checked ~ .checked-span:last-child {
     @apply translate-x-7;
 }
+
+body {
+    background-color: black;
+}
