@@ -90,7 +90,7 @@ export default function CreditCardPaymentModal({
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="bg-white flex flex-col items-center justify-center w-72 border border-black rounded-lg gap-5 font-spectral"
+            className="bg-white flex flex-col items-center justify-center w-72 border border-black rounded-lg gap-5 font-spectral md:text-xl lg:text-2xl lg:w-96"
         >
             <h1 className="w-full font-karla font-bold bg-black text-white text-center p-3 rounded-t-lg">
                 Buy Tickets

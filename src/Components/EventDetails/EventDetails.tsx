@@ -58,9 +58,9 @@ export default function EventDetails() {
     }
 
     return (
-        <div className="font-spectral mt-4 flex flex-col items-center justify-center gap-4 mb-10">
+        <div className="font-spectral mt-4 flex flex-col items-center justify-center gap-4 mb-10 lg:gap-8 md:gap-8">
             {!localStorage.getItem("jwt") && !isLoading && (
-                <p className="font-karla text-sm border-t-2 border-b-2 border-red-links text-center w-full">
+                <p className="font-karla text-sm border-t-2 border-b-2 border-red-links text-center w-full lg:text-xl md:text-xl">
                     Reminder: you need to{" "}
                     <Link
                         to={"/signin"}
@@ -74,16 +74,16 @@ export default function EventDetails() {
             {isLoading && <CardDetailsSkeleton />}
             {!isLoading && (
                 <>
-                    <div className="flex flex-col justify-center items-center shadow-lg m-4 p-4 gap-4 rounded-lg">
+                    <div className="flex flex-col justify-center items-center shadow-2xl m-4 py-4 px-6 gap-4 rounded-lg lg:max-w-md md:max-w-md">
                         <h1 className="font-karla font-bold text-4xl text-center">
                             {event?.title}
                         </h1>
                         <img
                             src={event?.imgSrc}
                             alt="Cover image of event"
-                            className="rounded-lg drop-shadow-md"
+                            className="rounded-lg drop-shadow-xl"
                         />
-                        <h2>
+                        <h2 className="lg:text-xl md:text-xl">
                             {event &&
                                 `${getMonth(
                                     event.startsAt.substring(3, 5)
@@ -94,10 +94,12 @@ export default function EventDetails() {
                                     event.endsAt.substring(3, 5)
                                 )} ${event.endsAt.substring(0, 2)}`}
                         </h2>
-                        <p>{event?.description}</p>
+                        <p className="lg:text-lg md:text-lg">
+                            {event?.description}
+                        </p>
                     </div>
                     <div className="flex flex-col gap-1">
-                        <div className="flex flex-col items-center justify-center">
+                        <div className="flex flex-col items-center justify-center lg:text-xl md:text-xl">
                             <p
                                 className={
                                     event &&
@@ -115,11 +117,11 @@ export default function EventDetails() {
                                 onClick={startOrderSession}
                             />
                         </div>
-                        <div className="flex items-center justify-center gap-1">
+                        <div className="flex items-center justify-center gap-1 lg:text-xl md:text-xl">
                             <select
                                 name="ticketsToBuy"
                                 id="amountOfTickets"
-                                className="text-white bg-black rounded-md p-1 border-r-4 border-black"
+                                className="text-white bg-black rounded-md p-1 border-r-4 border-black cursor-pointer"
                                 onChange={(e) => {
                                     setAmountOfTicketsToBuy(
                                         parseInt(e.target.value)
@@ -135,7 +137,7 @@ export default function EventDetails() {
                                     </option>
                                 ))}
                             </select>
-                            <p className="text-green-500 bg-black rounded-md py-1 px-2">
+                            <p className="text-green-500 bg-black rounded-md py-1 px-2 cursor-default">
                                 {event &&
                                     event?.tickets.price *
                                         (amountOfTicketsToBuy as number)}
@@ -145,7 +147,7 @@ export default function EventDetails() {
                     </div>
                     <Link
                         to={"/"}
-                        className="flex items-center justify-center text-white bg-black gap-1 p-2 rounded-md"
+                        className="flex items-center justify-center text-white bg-black gap-1 p-2 rounded-md lg:text-xl md:text-xl"
                     >
                         <FontAwesomeIcon icon={faArrowLeft} />
                         <Button text="Go back"></Button>

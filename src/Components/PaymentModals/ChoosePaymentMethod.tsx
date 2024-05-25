@@ -54,7 +54,7 @@ export default function ChoosePaymentMethod({
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="bg-white flex flex-col items-center justify-center w-72 border border-black rounded-lg gap-6"
+            className="bg-white flex flex-col items-center justify-center w-72 border border-black rounded-lg gap-6 lg:text-2xl lg:w-96 lg:gap-9 md:text-2xl md:w-96 md:gap-9"
         >
             <h1 className="w-full font-karla font-bold bg-black text-white text-center p-3 rounded-t-lg">
                 Buy Tickets
@@ -102,7 +102,7 @@ export default function ChoosePaymentMethod({
                                         "This field is required."}
                                 </p>
                             )}
-                            <p className="absolute text-[10px]">
+                            <p className="absolute text-[10px] lg:text-sm md:text-sm">
                                 <span className="text-failure-red font-bold">
                                     *
                                 </span>
@@ -130,16 +130,16 @@ export default function ChoosePaymentMethod({
                             <img
                                 src={paypalIcon}
                                 alt="paypal icon"
-                                className="max-w-24 max-h-20"
+                                className="max-w-24 max-h-20 lg:max-w-32 lg:max-h-28 md:max-w-32 md:max-h-28"
                             />
                         ) : (
                             <img
                                 src={creditCardIcon}
                                 alt="credit card icon"
-                                className="max-w-20 max-h-20"
+                                className="max-w-20 max-h-20 lg:max-w-32 lg:max-h-28 md:max-w-32 md:max-h-28"
                             />
                         )}
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 lg:gap-6 md:gap-6">
                             <Button
                                 text="Cancel"
                                 className="text-white bg-black p-2 rounded-md mb-6"

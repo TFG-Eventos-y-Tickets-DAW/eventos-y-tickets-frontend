@@ -2,7 +2,7 @@ export default function CardDetailsSkeleton() {
     return (
         <div
             role="status"
-            className="w-80 p-4 mt-4 border border-gray-200 rounded shadow-2xl animate-pulse md:p-6 dark:border-slate-300"
+            className="w-80 p-4 mt-4 border border-gray-200 rounded shadow-2xl animate-pulse md:p-6 dark:border-slate-300 lg:w-96 md:w-96"
         >
             <div className="m-auto h-5 bg-gray-200 rounded-full dark:bg-slate-300 w-48 mb-4"></div>
             <div className=" flex items-center justify-center h-48 mb-4 bg-gray-300 rounded dark:bg-slate-300">
