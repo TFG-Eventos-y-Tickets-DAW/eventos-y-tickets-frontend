@@ -102,17 +102,17 @@ export default function PaypalPaymentMethod({
 
     return (
         <>
-            <div className="bg-white flex flex-col items-center justify-center w-72 border border-black rounded-lg gap-6 font-spectral">
+            <div className="bg-white flex flex-col items-center justify-center w-72 border border-black rounded-lg gap-6 font-spectral lg:text-2xl lg:w-96 md:text-2xl md:w-96">
                 <h1 className="w-full font-karla font-bold bg-black text-white text-center p-3 rounded-t-lg">
                     Buy Tickets
                 </h1>
                 {!isLoading && !isPaymentDone && (
-                    <div className="flex flex-col items-center justify-center gap-6 px-4 py-2">
+                    <div className="flex flex-col items-center justify-center gap-6 px-4 py-2 lg:text-center md:text-center">
                         <div>
                             A new window will open to process the paypal
                             payment, click on the button to begin.
                         </div>
-                        <div className="flex gap-4">
+                        <div className="flex gap-4 lg:gap-8 md:gap-8">
                             <Button
                                 text="Cancel"
                                 className="text-white bg-black p-2 rounded-md mb-6"
@@ -127,7 +127,7 @@ export default function PaypalPaymentMethod({
                     </div>
                 )}
                 {isLoading && (
-                    <div className="flex flex-col justify-center items-center py-4 gap-2 text-lg">
+                    <div className="flex flex-col justify-center items-center py-4 gap-2 text-lg md:text-2xl lg:text-2xl">
                         <h1>Waiting for payment...</h1>
                         <FontAwesomeIcon
                             icon={faSpinner}
