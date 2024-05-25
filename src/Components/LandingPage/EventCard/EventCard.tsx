@@ -33,7 +33,7 @@ export default function EventCard(props: event) {
     return (
         <div
             key={props.id}
-            className="flex flex-col px-6 py-4 items-center justify-center border shadow-lg mx-4 rounded-md"
+            className="flex flex-col px-6 py-4 items-center justify-center border shadow-lg mx-4 rounded-md lg:max-w-96 md:max-w-80"
         >
             <div className="relative py-2">
                 {props.type == "PAID" && (
@@ -42,8 +42,7 @@ export default function EventCard(props: event) {
                         style={{
                             color: "green",
                         }}
-                        size="xl"
-                        className="absolute top-3.5 left-2"
+                        className="absolute top-3.5 left-2 text-4xl"
                     />
                 )}
                 <img
@@ -51,7 +50,7 @@ export default function EventCard(props: event) {
                     alt="Here is an event cover."
                     className="rounded-md object-cover border border-black aspect-square"
                 />
-                <p className="font-spectral text-sm absolute bottom-2.5 right-1.5">
+                <p className="font-spectral text-sm absolute bottom-2.5 right-1.5 lg:text-xl md:text-xl">
                     {`${getMonth(
                         props.startsAt.substring(3, 5)
                     )} ${props.startsAt.substring(0, 2)} - ${getMonth(
@@ -59,7 +58,9 @@ export default function EventCard(props: event) {
                     )} ${props.endsAt.substring(0, 2)}`}
                 </p>
             </div>
-            <p className="font-spectral font-semibold text-xl">{props.title}</p>
+            <p className="font-spectral font-semibold text-xl lg:text-2xl md:text-2xl">
+                {props.title}
+            </p>
         </div>
     );
 }

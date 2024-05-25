@@ -5,7 +5,7 @@ interface MyLogoProps {
 }
 
 export default function Logo({
-    className = "max-h-4 cursor-pointer",
+    className = "max-h-4 lg:max-h-8 md:max-h-8 cursor-pointer",
 }: MyLogoProps) {
     return <img src={logo} alt="Here is a logo!" className={className} />;
 }

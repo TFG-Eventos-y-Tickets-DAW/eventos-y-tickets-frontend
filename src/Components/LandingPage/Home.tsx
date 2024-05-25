@@ -24,9 +24,11 @@ export default function Home() {
     const [paginationData, setPaginationData] = useState<pagination>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
+    const eventsPerPage = 6;
+
     useEffect(() => {
         async function fetchData() {
-            const publicEventsData = await fetchPublicEvents(2);
+            const publicEventsData = await fetchPublicEvents(eventsPerPage);
 
             setShownEvents([
                 {
@@ -155,17 +157,17 @@ export default function Home() {
              */}
 
             <div className="flex flex-col justify-center px-5 py-10 gap-5">
-                <h1 className="font-karla font-bold text-4xl drop-shadow-2xl text-center">
+                <h1 className="font-karla font-bold text-4xl drop-shadow-2xl text-center lg:text-6xl md:text-5xl">
                     Events
                 </h1>
-                <ul className="font-karla font-semibold flex justify-evenly items-center gap-4">
-                    <li className="text-lg border-2 border-black w-full text-center rounded-md text-white bg-black">
+                <ul className="font-karla font-semibold flex justify-evenly items-center gap-4 lg:max-w-96 lg:self-center md:max-w-96 md:self-center">
+                    <li className="text-lg border-2 border-black w-full text-center rounded-md text-white bg-black lg:w-28 lg:text-2xl md:w-32 md:text-2xl">
                         All
                     </li>
-                    <li className="text-lg border-2 border-black w-full text-center rounded-md">
+                    <li className="text-lg border-2 border-black w-full text-center rounded-md lg:w-28 lg:text-2xl md:w-32 md:text-2xl">
                         Popular
                     </li>
-                    <li className="text-lg border-2 border-black w-full text-center rounded-md">
+                    <li className="text-lg border-2 border-black w-full text-center rounded-md lg:w-28 lg:text-2xl md:w-32 md:text-2xl">
                         New
                     </li>
                 </ul>
@@ -177,7 +179,7 @@ export default function Home() {
              *
              */}
 
-            <div className="flex flex-col gap-10 py-6">
+            <div className="flex flex-col gap-10 py-6 lg:flex-row lg:justify-center lg:flex-wrap md:flex-row md:justify-center md:flex-wrap md:pt-2">
                 {shownEvents &&
                     !isLoading &&
                     findEventByNumPage(currentPage, shownEvents).events.map(
@@ -189,18 +191,18 @@ export default function Home() {
                     )}
                 {isLoading &&
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    Array.from({ length: 5 }).map((_e, i) => (
+                    Array.from({ length: eventsPerPage }).map((_e, i) => (
                         <CardSkeleton key={i} />
                     ))}
             </div>
 
-            <div className="font-spectral font-bold flex justify-center items-center gap-2">
+            <div className="font-spectral font-bold flex justify-center items-center gap-2 lg:gap-3 lg:mt-4 md:gap-3 md:mt-4">
                 <FontAwesomeIcon
                     icon={faArrowLeft}
-                    size="lg"
+                    className="text-xl lg:text-3xl md:text-3xl"
                     onClick={fetchPreviousPage}
                 />
-                <ul className="flex justify-center items-center">
+                <ul className="flex justify-center items-center lg:text-2xl lg:gap-1 md:text-2xl md:gap-1">
                     <li
                         className={
                             currentPage == 1
@@ -233,7 +235,7 @@ export default function Home() {
                 </ul>
                 <FontAwesomeIcon
                     icon={faArrowRight}
-                    size="lg"
+                    className="text-xl lg:text-3xl md:text-3xl"
                     onClick={() =>
                         fetchNextPage(
                             paginationData

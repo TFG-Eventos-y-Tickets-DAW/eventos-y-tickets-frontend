@@ -2,9 +2,9 @@ export default function CardSkeleton() {
     return (
         <div
             role="status"
-            className="p-4 border border-gray-200 rounded-sm shadow-2xl animate-pulse mx-6"
+            className="p-4 border border-gray-200 rounded-sm shadow-2xl animate-pulse mx-6 lg:mx-0 lg:w-96 md:w-72"
         >
-            <div className="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded dark:bg-slate-200">
+            <div className="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded dark:bg-slate-200 lg:h-60">
                 <svg
                     className="w-10 h-10 text-gray-200 dark:text-gray-400"
                     aria-hidden="true"

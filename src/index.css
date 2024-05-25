@@ -11,15 +11,15 @@
 }
 
 input:focus {
-    outline-color: black;
+    outline-color: none;
 }
 
 textarea:focus {
-    outline-color: black;
+    outline-color: none;
 }
 
 select:focus {
-    outline-color: black;
+    outline-color: none;
 }
 
 .checked-input:checked ~ .checked-span:last-child {
