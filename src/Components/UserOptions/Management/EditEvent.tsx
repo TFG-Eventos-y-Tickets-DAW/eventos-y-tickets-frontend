@@ -16,7 +16,6 @@ import {
     IEventDetailsForUpdate,
 } from "../../../types/apis";
 import createEventDateFormat from "../../../HelperFunctions/createEventDateFormat";
-import { DevTool } from "@hookform/devtools";
 
 interface IFormInput {
     title: string;
@@ -78,8 +77,7 @@ export default function EditEvent() {
         watch,
         reset,
         setValue,
-        formState: { errors },
-        control
+        formState: { errors }, 
     } = useForm<IFormInput>();
 
     const file = watch("imgSrc");
@@ -690,7 +688,6 @@ export default function EditEvent() {
                 ></Button>
             </div>
         </form>
-        <DevTool control={control} />
         </>
     );
 }
