@@ -307,7 +307,7 @@ export default function CreateEvent() {
                         defaultValue={"selectDefault"}
                     >
                         <option value="selectDefault">Select currency</option>
-                        <option value="USD">Dollar</option>
+                        <option value="USD">USD</option>
                     </select>
                     {errors.currency && (
                         <span className="font-karla text-sm text-red-links font-bold">

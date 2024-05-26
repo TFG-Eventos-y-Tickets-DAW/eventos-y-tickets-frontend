@@ -16,6 +16,7 @@ import {
     IEventDetailsForUpdate,
 } from "../../../types/apis";
 import createEventDateFormat from "../../../HelperFunctions/createEventDateFormat";
+import { DevTool } from "@hookform/devtools";
 
 interface IFormInput {
     title: string;
@@ -78,6 +79,7 @@ export default function EditEvent() {
         reset,
         setValue,
         formState: { errors },
+        control
     } = useForm<IFormInput>();
 
     const file = watch("imgSrc");
@@ -127,9 +129,7 @@ export default function EditEvent() {
             setValue(
                 "tickets.quantity",
                 eventData.ticketsConfiguration.quantity
-            );
-            setValue("country", eventData.country);
-            setValue("currency", eventData.currency);
+            ); 
             setValue("status", !(eventData.status === "DRAFT"));
         }
 
@@ -152,6 +152,13 @@ export default function EditEvent() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file, setEventImage]);
+
+    useEffect(() => {
+        if (preUpdateEventData) {
+            setValue("country", preUpdateEventData.country)
+            setValue("currency", preUpdateEventData.currency)
+        }
+    }, [preUpdateEventData, setValue])
 
     function buildUpdateEventPayload(data: IFormInput) {
         const isFree = typeOfEvent === "free";
@@ -244,6 +251,7 @@ export default function EditEvent() {
     };
 
     return (
+        <>
         <form
             onSubmit={handleSubmit(onSubmit)}
             className="font-spectral flex flex-col justify-center items-center mt-6 px-4 gap-4"
@@ -420,7 +428,7 @@ export default function EditEvent() {
                         disabled
                     >
                         <option value="selectDefault">Select currency</option>
-                        <option value="USD">Dollar</option>
+                        <option value="USD">USD</option>
                     </select>
                     {errors.currency && (
                         <span className="font-karla text-sm text-red-links font-bold">
@@ -682,5 +690,7 @@ export default function EditEvent() {
                 ></Button>
             </div>
         </form>
+        <DevTool control={control} />
+        </>
     );
 }
