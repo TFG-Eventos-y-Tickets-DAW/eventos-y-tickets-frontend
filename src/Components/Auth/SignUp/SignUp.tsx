@@ -63,7 +63,7 @@ export default function SignIn() {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="font-spectral flex flex-col gap-4 justify-center shadow-2xl mt-10 mx-6 px-6 py-8"
+            className="font-spectral flex flex-col gap-4 justify-center shadow-2xl my-10 mx-6 px-6 py-8 md:max-w-80 md:m-auto md:my-8 md:text-center lg:text-center lg:max-w-96 lg:m-auto lg:my-16 lg:text-xl"
         >
             <div className="font-karla">
                 <h1 className="text-4xl font-bold">Getting Started</h1>

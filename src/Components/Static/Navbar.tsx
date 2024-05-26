@@ -14,13 +14,13 @@ export default function Navbar() {
                 <div className="flex gap-2 lg:gap-8 md:gap-6 justify-center items-center">
                     <Link to={"/login"}>
                         <Button
-                            className="font-spectral bg-secondary-black-lighter text-white rounded-md py-1 px-2 lg:text-2xl md:text-xl cursor-pointer"
+                            className="font-spectral bg-secondary-black-lighter text-white rounded-md py-1 px-2 lg:text-2xl md:text-xl cursor-pointer hover:text-accent-blue"
                             text="Sign In"
                         />
                     </Link>
                     <Link to={"/signin"}>
                         <Button
-                            className="font-spectral bg-accent-blue text-black rounded-md py-1 px-2 lg:text-2xl lg:py-2 lg:px-4 md:text-xl md:py-2 md:px-3 cursor-pointer"
+                            className="font-spectral bg-accent-blue text-black rounded-md py-1 px-2 lg:text-2xl lg:py-2 lg:px-4 md:text-xl md:py-2 md:px-3 cursor-pointer hover:brightness-110"
                             text="Get Started"
                         />
                     </Link>
@@ -34,13 +34,13 @@ export default function Navbar() {
                         className="hidden lg:inline-block md:inline-block"
                     >
                         <Button
-                            className="font-spectral bg-secondary-black-lighter text-white rounded-md py-1 px-2 lg:text-2xl md:text-xl cursor-pointer"
+                            className="font-spectral bg-secondary-black-lighter text-white rounded-md py-1 px-2 lg:text-2xl md:text-xl cursor-pointer hover:text-accent-blue"
                             text="My Tickets"
                         />
                     </Link>
                     <Link to={"user/events"}>
                         <Button
-                            className="font-spectral bg-accent-blue text-black rounded-md py-1 px-2 lg:text-2xl lg:py-2 lg:px-4 md:text-xl md:py-2 md:px-4 cursor-pointer"
+                            className="font-spectral bg-accent-blue text-black rounded-md py-1 px-2 lg:text-2xl lg:py-2 lg:px-4 md:text-xl md:py-2 md:px-4 cursor-pointer hover:brightness-110"
                             text="My Events"
                         />
                     </Link>

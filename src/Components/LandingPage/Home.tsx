@@ -24,7 +24,7 @@ export default function Home() {
     const [paginationData, setPaginationData] = useState<pagination>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const eventsPerPage = 6;
+    const eventsPerPage = 4;
 
     useEffect(() => {
         async function fetchData() {

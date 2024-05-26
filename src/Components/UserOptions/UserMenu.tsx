@@ -15,12 +15,12 @@ export default function UserMenu() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center font-karla mt-4 gap-1 mb-10">
+        <div className="flex flex-col items-center justify-center font-karla gap-1 my-10 px-2 lg:gap-3">
             <h1 className="font-bold text-4xl text-center">
                 Welcome {user.currentUser?.firstName},
             </h1>
             <h2 className="text-xl">What are we doing today?</h2>
-            <div className="shadow-2xl w-full p-4 max-w-72 font-spectral gap-4 flex flex-col">
+            <div className="shadow-2xl w-full p-4 max-w-72 font-spectral gap-4 flex flex-col md:p-8 lg:gap-6 md:gap-6">
                 <Link to={"/user/tickets"}>
                     <Button
                         text="My Tickets"
