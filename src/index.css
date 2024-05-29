@@ -10,6 +10,10 @@
         1px 1px 0 black;
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
 input:focus {
     outline-color: none;
 }
