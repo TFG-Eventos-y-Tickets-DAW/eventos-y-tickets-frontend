@@ -85,11 +85,11 @@ export function ViewEventStats() {
     }
 
     return (
-        <div className="font-spectral mt-8 flex flex-col justify-center gap-2 mb-8">
+        <div className="font-spectral mt-8 flex flex-col justify-center gap-2 mb-8 md:gap-4 lg:gap-4">
             <h1 className="text-center text-4xl font-karla font-bold">
                 Event Stats
             </h1>
-            <div className="grid grid-cols-2 p-4 gap-2 bg-slate-50 rounded-md m-4 drop-shadow-xl outline outline-1">
+            <div className="grid grid-cols-2 p-4 gap-2 bg-slate-50 rounded-md m-4 drop-shadow-xl outline outline-1 md:w-[576px] md:m-auto lg:w-[576px] lg:m-auto">
                 <div className="flex flex-col items-center justify-center border-2 border-black rounded-md p-2 shadow-lg text-lg bg-white">
                     <span className="flex items-center justify-center gap-1 ">
                         <FontAwesomeIcon icon={faTicket} />
@@ -98,7 +98,7 @@ export function ViewEventStats() {
                     {eventStats?.ticketsSold}
                 </div>
                 <div className="flex flex-col items-center justify-center border-2 border-black rounded-md p-2 shadow-lg text-lg bg-white">
-                    <span className="flex items-center justify-center gap-1 succ faile">
+                    <span className="flex items-center justify-center gap-1">
                         <FontAwesomeIcon
                             icon={faCircleDot}
                             color={
@@ -134,8 +134,8 @@ export function ViewEventStats() {
                     <span
                         className={
                             ordersFilter === "COMPLETED"
-                                ? "bg-black text-white p-1 rounded-md outline outline-1 outline-black"
-                                : "p-1 rounded-md outline outline-1 outline-black"
+                                ? "bg-black text-white p-1 rounded-md outline outline-1 outline-black hover:cursor-pointer"
+                                : "p-1 rounded-md outline outline-1 outline-black hover:cursor-pointer"
                         }
                         onClick={() =>
                             ordersFilter === "COMPLETED"
@@ -148,8 +148,8 @@ export function ViewEventStats() {
                     <span
                         className={
                             ordersFilter === "REFUNDED"
-                                ? "bg-black text-white p-1 rounded-md outline outline-1 outline-black"
-                                : "p-1 rounded-md outline outline-1 outline-black"
+                                ? "bg-black text-white p-1 rounded-md outline outline-1 outline-black hover:cursor-pointer"
+                                : "p-1 rounded-md outline outline-1 outline-black hover:cursor-pointer"
                         }
                         onClick={() =>
                             ordersFilter === "REFUNDED"
@@ -168,10 +168,18 @@ export function ViewEventStats() {
                         <table>
                             <thead className="bg-black text-white outline outline-1 outline-black">
                                 <tr className="border border-black text-center ">
-                                    <th className="p-1.5">Order Id</th>
-                                    <th className="p-1.5">Buyer</th>
-                                    <th className="p-1.5">Total</th>
-                                    <th className="p-1.5">Payment Method</th>
+                                    <th className="p-1.5 md:px-6 lg:px-6">
+                                        Order Id
+                                    </th>
+                                    <th className="p-1.5 md:px-6 lg:px-6">
+                                        Buyer
+                                    </th>
+                                    <th className="p-1.5 md:px-6 lg:px-6">
+                                        Total
+                                    </th>
+                                    <th className="p-1.5 md:px-6 lg:px-6">
+                                        Payment Method
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -190,16 +198,16 @@ export function ViewEventStats() {
                                                     : setSelectedOrder(order)
                                             }
                                         >
-                                            <td className="p-1 outline outline-black outline-1">
+                                            <td className="p-1 outline outline-black outline-1 md:p-3 lg:px-3">
                                                 {order.id}
                                             </td>
-                                            <td className="p-1 outline outline-black outline-1">
+                                            <td className="p-1 outline outline-black outline-1 md:p-3 lg:px-3">
                                                 {order.firstName}
                                             </td>
-                                            <td className="p-1 outline outline-black outline-1">
+                                            <td className="p-1 outline outline-black outline-1 md:p-3 lg:px-3">
                                                 {order.total}
                                             </td>
-                                            <td className="p-1 outline outline-black outline-1">
+                                            <td className="p-1 outline outline-black outline-1 md:p-3 lg:px-3">
                                                 {order.paymentMethod}
                                             </td>
                                         </tr>
