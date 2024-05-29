@@ -58,26 +58,26 @@ export default function UserTickets() {
     }
 
     return (
-        <div className="flex flex-col p-6 font-spectral gap-2 ">
-            <h1 className="font-karla font-bold text-3xl drop-shadow-2xl">
+        <div className="flex flex-col p-6 font-spectral gap-2 lg:gap-3 md:gap-3">
+            <h1 className="font-karla font-bold text-3xl drop-shadow-2xl lg:text-center lg:text-5xl md:text-center md:text-5xl">
                 My Tickets
             </h1>
-            <div className="flex gap-4">
-                <div className="flex justify-center items-center bg-white px-2 gap-1 border-[1px] rounded-md border-black drop-shadow-2xl">
+            <div className="flex gap-4 lg:max-w-xl lg:m-auto md:max-w-xl md:m-auto">
+                <div className="flex justify-center items-center bg-white px-2 gap-1 border-[1px] rounded-md border-black drop-shadow-2xl lg:w-[576px] md:w-[576px]">
                     <FontAwesomeIcon
                         icon={faMagnifyingGlass}
-                        className="hover:text-accent-blue"
+                        className="hover:text-accent-blue lg:text-xl md:text-xl hover:cursor-pointer"
                     />
                     <input
                         type="text"
                         placeholder="Write here to search..."
-                        className="font-spectral p-1 outline-none text-sm"
+                        className="font-spectral p-1 outline-none text-sm lg:text-xl lg:w-full md:text-xl md:w-full"
                     />
                 </div>
                 <select
                     name="selected-filter"
                     id="selected-filter"
-                    className="text-white bg-black rounded-md px-1"
+                    className="text-white bg-black rounded-md px-1 hover:cursor-pointer"
                 >
                     <option value="all">All</option>
                     <option value="paid">Paid</option>
@@ -86,7 +86,7 @@ export default function UserTickets() {
                     <option value="finalized">Finalized</option>
                 </select>
             </div>
-            <div className="flex flex-col gap-4 p-4 bg-black rounded-md shadow-lg mt-2 max-h-64 overflow-scroll">
+            <div className="flex flex-col gap-4 p-4 bg-black rounded-md shadow-lg mt-2 max-h-64 overflow-scroll lg:max-h-80 lg:w-[576px] lg:self-center md:max-h-80 md:w-[576px] md:self-center scrollbar-hide">
                 {isLoading && (
                     <FontAwesomeIcon
                         icon={faSpinner}
@@ -159,7 +159,7 @@ export default function UserTickets() {
             <Button
                 disabled={selectedTicket === undefined ? true : false}
                 text="Download Ticket"
-                className="text-white bg-black p-2 rounded-md mb-6 drop-shadow-lg"
+                className="text-white bg-black p-2 rounded-md mb-6 drop-shadow-lg lg:self-center lg:p-3 lg:text-xl md:self-center md:p-3 md:text-xl"
                 onClick={downloadSelectedTicket}
             />
         </div>
