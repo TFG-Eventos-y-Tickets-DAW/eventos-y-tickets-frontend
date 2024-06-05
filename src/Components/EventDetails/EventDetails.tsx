@@ -43,6 +43,8 @@ export default function EventDetails() {
             ? 5
             : event?.tickets.quantityAvailable;
 
+    const isFreeEvent = event?.tickets.type === "FREE"
+
     function startOrderSession() {
         setCreateOrderData({
             eventId: event ? event.id : -1,
@@ -103,7 +105,7 @@ export default function EventDetails() {
                             <p
                                 className={
                                     event &&
-                                    event?.tickets.quantityAvailable >
+                                        event?.tickets.quantityAvailable >
                                         event?.tickets.quantity / 2
                                         ? "text-success-green"
                                         : "text-red-links"
@@ -139,9 +141,8 @@ export default function EventDetails() {
                             </select>
                             <p className="text-green-500 bg-black rounded-md py-1 px-2 cursor-default">
                                 {event &&
-                                    event?.tickets.price *
-                                        (amountOfTicketsToBuy as number)}
-                                $
+                                    !isFreeEvent && `${event?.tickets.price * (amountOfTicketsToBuy as number)} $`}
+                                {event && isFreeEvent && "FREE"}
                             </p>
                         </div>
                     </div>
@@ -165,6 +166,7 @@ export default function EventDetails() {
                         selectedPaymentMethod={selectedPaymentMethod}
                         createOrderData={createOrderData}
                         setOrderSessionData={setOrderSessionData}
+                        isFreeEvent={isFreeEvent}
                     />
                 )}
                 {orderSessionData?.orderSessionId &&
