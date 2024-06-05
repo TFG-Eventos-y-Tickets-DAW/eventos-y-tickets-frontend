@@ -193,7 +193,7 @@ export default function CreditCardPaymentModal({
                                 {...register("expiry", {
                                     required: true,
                                     pattern: {
-                                        value: /^([01][1-9]\/20[2-9][1-9])$/,
+                                        value: /^([01][0-9]\/20[2-9][1-9])$/,
                                         message: "Invalid expiration date.",
                                     },
                                     maxLength: 7,

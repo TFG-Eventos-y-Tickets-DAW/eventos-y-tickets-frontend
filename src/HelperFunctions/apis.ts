@@ -112,7 +112,7 @@ export async function createOrderSession(createOrderData: ICreateOrderData) {
 
 export async function payOrder(
     orderSessionData: IOrderSessionData,
-    paymentMethod: "CREDIT" | "PAYPAL",
+    paymentMethod: "CREDIT" | "PAYPAL" | "FREE",
     paymentMethodDetails?: IPaymentMethodCreditCard
 ) {
     const paymentMethodInformation =
